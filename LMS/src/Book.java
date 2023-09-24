@@ -1,8 +1,8 @@
-public class Book extends Main{
+public class Book{
 
     String title;
     String author;
-    int id1;
+    int barCode;
     /*
      * Constructs a new Book object with the given title, author,
      * and isbn.
@@ -10,18 +10,24 @@ public class Book extends Main{
      * @param title The tile of the book.
      * @param author The author of the book.
      */
-    public Book(int id1, String title, String author) {
-        this.id1 = id1;
+    public Book(int barCode, String title, String author) {
+        this.barCode = barCode;
         this.title = title;
         this.author = author;
     }
-
-    public int getID1() {
-        return id1;
+    /*
+     * Receives the Barcode of the book
+     * @return current barCode of the book
+     */
+    public int getbarCode() {
+        return barCode;
     }
-
-    public void setID1(int id1){
-        this.id1 = id1;
+    /*
+     * Sets the Barcode of the book.
+     * @param barCode The new value to set for barCode.
+     */
+    public void setbarCode(int barCode){
+        this.barCode = barCode;
     }
 
     public String getTitle() {

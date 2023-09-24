@@ -1,4 +1,4 @@
-public class FileReader extends Main{
+public class FileReader{
 
 
 
