@@ -17,7 +17,9 @@ public class Main {
 
            int choice;
 
+           FileReader fileReader = new FileReader("C:\\Users\\Kiara\\Desktop\\Projects\\LMS\\LMS\\Songs.txt", collection, library, idList, generator);
 
+           fileReader.readPrintFile();
 
            while(true) {
 
