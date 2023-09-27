@@ -1,8 +1,12 @@
+import java.util.*;
 public class Book{
 
     String title;
     String author;
     int barCode;
+    String genre;
+    String status;
+
     /*
      * Constructs a new Book object with the given title, author,
      * and isbn.

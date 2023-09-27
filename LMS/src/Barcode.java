@@ -33,12 +33,13 @@ public class Barcode {
                 }
             }
 //            String checkTaken = "Barcode is already taken, choose another one.";
-              System.out.println("The Barcode you enter was already taken, the system assigned a new one to this book.");
-
-        }
-//        if(!idList.isEmpty()) {
 //            System.out.println("The Barcode you enter was already taken, the system assigned a new one to this book.");
-//        }
+        }
+/*
+        if(!idList.isEmpty()) {
+            System.out.println("The Barcode you enter was already taken, the system assigned a new one to this book.");
+        }
+*/
 
         if(!found) {
             idList.add(nextID);

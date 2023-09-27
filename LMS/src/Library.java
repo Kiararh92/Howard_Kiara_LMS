@@ -17,9 +17,10 @@ public class Library{
      *                   Pass an existing ArrayList or creat a new one to initialize
      *                   the library's collection.
      */
-    public Library(ArrayList <Book> collection) {
+    public Library(ArrayList <Book> collection, ArrayList <Book> checkedOut) {
         this.collection = collection;
-        checkedOut = new ArrayList<Book>();
+        //checkedOut = new ArrayList<Book>();
+        this.checkedOut = checkedOut;
     }
     /*
      * Adds a new book to the collection.
@@ -40,6 +41,11 @@ public class Library{
         checkedOut.add(book);
     }
 
+/*    public void checkIn(Book book) {
+        collection.add(book);
+        checkedOut.remove(book);
+    }
+ */
     /*
      * Retrieves the collection of books in the library.
      *

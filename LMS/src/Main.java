@@ -10,14 +10,18 @@ public class Main {
            Scanner scanner = new Scanner(System.in);
 
            ArrayList <Book> collection = new ArrayList<>();
+           ArrayList <Book> checkedOut = new ArrayList<>();
            ArrayList<Integer> idList = new ArrayList<>();
 
-           Library library = new Library(collection);
+           Library library = new Library(collection, checkedOut);
+           //Library libraryCO = new Library(checkedOut);
            Barcode generator = new Barcode(idList);
 
            int choice;
 
-           FileReader fileReader = new FileReader("C:\\Users\\Kiara\\Desktop\\Projects\\LMS\\LMS\\Songs.txt", collection, library, idList, generator);
+           FileReader fileReader = new FileReader("Books.txt", collection, library, idList, generator);
+           FWriter fileWriter = new FWriter("Books.txt", collection, library);
+           FWriter outWrite = new FWriter("CheckedOut", checkedOut, library);
 
            fileReader.readPrintFile();
 
@@ -26,18 +30,26 @@ public class Main {
                System.out.println("Menu");
                System.out.println("1. Update text file");
                System.out.println("2. Add a book to the collection");
-               System.out.println("3. Remove a book from the collection");
+               System.out.println("3. Check-out a book");
                System.out.println("4. Display the library collection");
                System.out.println("5. Display books currently checked-out");
-               System.out.println("6. Exit");
+               System.out.println("6. Remove a book from the collection");
+               System.out.println("7. Check in a book");
+               System.out.println("8. Exit");
                System.out.println("Enter Your Choice: ");
 
                choice = scanner.nextInt();
 
                switch (choice) {
                    case 1:
-
-
+                       /*
+                        * Option 1
+                        * Updates text file with current collection of books.
+                        * calls the writeToFile method to write collection
+                        * of books to a text file.
+                        */
+                       fileWriter.writeToFile();
+                       System.out.println("Your text file has been updated.");
                        break;
 
                    case 2:
@@ -94,7 +106,7 @@ public class Main {
                        int borrowedBarcode;
                        boolean askedRemoved;
 
-                       System.out.println("Which book would you like to remove?");
+                       System.out.println("Which book would you like to check-out?");
 
                        while (true) {
 
@@ -114,6 +126,7 @@ public class Main {
                            break;
                        }
                        for (Book book : library.getCheckedOut()) {
+                           outWrite.writeCheckedOut();
                            System.out.println("Book successfully checked out.");
                            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
                        }
@@ -145,6 +158,30 @@ public class Main {
                        break;
 
                    case 6:
+                       break;
+
+                   case 7:
+
+                       int returnedBarcode;
+                       boolean askedReturned;
+
+                       System.out.println("Please provide the barcode # of the book you're returning today.");
+                       returnedBarcode = scanner.nextInt();
+
+                       Iterator<Book> iterator = library.getCheckedOut().iterator();
+                       while (iterator.hasNext()) {
+                           Book book = iterator.next();
+                           if (book.getbarCode() == returnedBarcode) {
+                               iterator.remove();
+                               library.addBook(book);
+                               askedReturned = true;
+                           } else {
+                               askedReturned = false;
+                           }
+                   }
+                       break;
+
+                   case 8:
                        //Option 6
                        //Displays goodbye message and exits application
                        System.out.println("Goodbye!");

@@ -18,7 +18,7 @@ public class FileReader {
 
     public void readPrintFile() {
         try{
-            File fileBooks = new File("C:\\Users\\Kiara\\Desktop\\Projects\\LMS\\LMS\\Songs.txt");
+            File fileBooks = new File("Books.txt");
             Scanner myReader = new Scanner(fileBooks);
             while(myReader.hasNextLine()) {
                 String data = myReader.nextLine();
