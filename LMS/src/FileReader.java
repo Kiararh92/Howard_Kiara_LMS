@@ -50,4 +50,37 @@ public class FileReader {
         }
     }
 
+
+    public void readCheckedOut(){
+        try{
+            File borrowedBooks = new File("CheckedOut.txt");
+            Scanner borrowedReader = new Scanner(borrowedBooks);
+            while(borrowedReader.hasNextLine()) {
+                String data = borrowedReader.nextLine();
+                String[] parts = data.split(",");
+                if(parts.length == 3) {
+                    String id = parts[0];
+                    String title = parts[1];
+                    String author = parts[2];
+                    int id1 = Integer.parseInt(id);
+
+                    generator.textbarCode(id1);
+                    int barCode = generator.getCurrentbarCode();
+
+                    Book book = new Book(barCode, title, author);
+
+                    library.addBorrowed(book);
+                }
+            }
+            borrowedReader.close();
+            System.out.println("Updated Checked-out collection.");
+            //Handle file not found error
+        }catch (FileNotFoundException e) {
+            System.out.println("Ann error has occurred.");
+            e.printStackTrace();
+        }
+        for (Book book : library.getCheckedOut()) {
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
+        }
+    }
 }

@@ -6,6 +6,8 @@ public class FWriter {
     private final ArrayList<Book> collection;
     private final String fileUpdate;
 
+    //private final String bfileUpdate;
+
 
     public FWriter(String fileUpdate, ArrayList<Book> collection, Library library) {
         this.fileUpdate = fileUpdate;
@@ -30,8 +32,8 @@ public class FWriter {
         try(FileWriter outWrite = new FileWriter(fileUpdate)) {
             for (Book book : library.getCheckedOut()) {
                 System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
-                String line = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor();
-                outWrite.write(line + "\n");
+                String line1 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor();
+                outWrite.write(line1 + "\n");
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");

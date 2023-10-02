@@ -20,15 +20,17 @@ public class Main {
            int choice;
 
            FileReader fileReader = new FileReader("Books.txt", collection, library, idList, generator);
+           FileReader borrowedReader = new FileReader("CheckedOut.txt",checkedOut, library, idList, generator);
            FWriter fileWriter = new FWriter("Books.txt", collection, library);
-           FWriter outWrite = new FWriter("CheckedOut", checkedOut, library);
+           FWriter outWrite = new FWriter("CheckedOut.txt", checkedOut, library);
 
            fileReader.readPrintFile();
+           borrowedReader.readCheckedOut();
 
            while(true) {
 
                System.out.println("Menu");
-               System.out.println("1. Update text file");
+               System.out.println("1. Update text files");
                System.out.println("2. Add a book to the collection");
                System.out.println("3. Check-out a book");
                System.out.println("4. Display the library collection");
@@ -49,7 +51,8 @@ public class Main {
                         * of books to a text file.
                         */
                        fileWriter.writeToFile();
-                       System.out.println("Your text file has been updated.");
+                       outWrite.writeCheckedOut();
+                       System.out.println("Your text files has been updated.");
                        break;
 
                    case 2:
@@ -64,7 +67,7 @@ public class Main {
                         */
 
                        System.out.println("Add a new book to the collection.");
-                       boolean askAdd;
+                       boolean anotherAdd;
                        while (true) {
                            scanner.nextLine();
                            System.out.println("barcode:");
@@ -83,9 +86,9 @@ public class Main {
                            System.out.println("Would you like to add another book? Yes or No?");
                            String option = scanner.nextLine();
                            if (option.equalsIgnoreCase("Yes")) {
-                               askAdd = true;
+                               anotherAdd = true;
                            } else {
-                               askAdd = false;
+                               anotherAdd = false;
                                break;
                            }
                        }
@@ -126,6 +129,7 @@ public class Main {
                            break;
                        }
                        for (Book book : library.getCheckedOut()) {
+                           fileWriter.writeToFile();
                            outWrite.writeCheckedOut();
                            System.out.println("Book successfully checked out.");
                            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
@@ -161,24 +165,60 @@ public class Main {
                        break;
 
                    case 7:
-
+                       /*
+                        * Option 7
+                        * Check-in/return a borrowed book via Barcode #.
+                        * compares entered barcode to barcode in the checked out checked-out List
+                        * If barcode is in the checked-out List, then removes that book
+                        * from the checked-out List and adds it back to the book collection.
+                        * Displays if book was successfully checked in.
+                        * Displays the current book collection after books are returned.
+                        *
+                        * Used an iterator as the error ConcurrentModificationException
+                        * kept occurring.
+                        */
                        int returnedBarcode;
-                       boolean askedReturned;
+                       boolean found = false;
+                       boolean anotherIn = true;
+                       String option;
 
+                   while(anotherIn){
                        System.out.println("Please provide the barcode # of the book you're returning today.");
                        returnedBarcode = scanner.nextInt();
+                       scanner.hasNextLine();
 
                        Iterator<Book> iterator = library.getCheckedOut().iterator();
+
                        while (iterator.hasNext()) {
                            Book book = iterator.next();
                            if (book.getbarCode() == returnedBarcode) {
                                iterator.remove();
                                library.addBook(book);
-                               askedReturned = true;
-                           } else {
-                               askedReturned = false;
+                               found = true;
+                               System.out.println("Successful check in.");
+                               scanner.nextLine();
+                               System.out.println("Would you like to check-in another book? Yes or No?");
+                               option = scanner.nextLine();
+
+                               if (!option.equalsIgnoreCase("Yes")) {
+                                   anotherIn = false;
+                               }
+                               break;
                            }
+                           found = false;
+                       }
+
+                       if(!found) {
+                           System.out.println("That book is not currently checked-out.");
+                           anotherIn = false;
+                     }
                    }
+                       System.out.println("Thank you for returning your books.");
+                       System.out.println();
+                       System.out.println("Here is the current Book List after returns.");
+                       for (Book book1 : library.getBooks()) {
+                           System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor());
+                       }
                        break;
 
                    case 8:
