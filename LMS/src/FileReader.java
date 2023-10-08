@@ -17,13 +17,13 @@ public class FileReader {
     }
 
     public void readPrintFile() {
-        try{
+        try {
             File fileBooks = new File("Books.txt");
             Scanner myReader = new Scanner(fileBooks);
-            while(myReader.hasNextLine()) {
+            while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] parts = data.split(",");
-                if(parts.length == 3) {
+                if (parts.length == 3) {
                     String id = parts[0];
                     String title = parts[1];
                     String author = parts[2];
@@ -51,14 +51,14 @@ public class FileReader {
     }
 
 
-    public void readCheckedOut(){
-        try{
+    public void readCheckedOut() {
+        try {
             File borrowedBooks = new File("CheckedOut.txt");
             Scanner borrowedReader = new Scanner(borrowedBooks);
-            while(borrowedReader.hasNextLine()) {
+            while (borrowedReader.hasNextLine()) {
                 String data = borrowedReader.nextLine();
                 String[] parts = data.split(",");
-                if(parts.length == 3) {
+                if (parts.length == 3) {
                     String id = parts[0];
                     String title = parts[1];
                     String author = parts[2];
@@ -75,12 +75,47 @@ public class FileReader {
             borrowedReader.close();
             System.out.println("Updated Checked-out collection.");
             //Handle file not found error
-        }catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("Ann error has occurred.");
             e.printStackTrace();
         }
         for (Book book : library.getCheckedOut()) {
             System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
+        }
+    }
+
+    public void readYourText() {
+
+
+        try {
+            File yourtextFile = new File(filePath);
+            Scanner customFile = new Scanner(yourtextFile);
+            while (customFile.hasNextLine()) {
+                String data1 = customFile.nextLine();
+                String[] parts1 = data1.split(",");
+                if (parts1.length == 3) {
+                    String id2 = parts1[0];
+                    String title1 = parts1[1];
+                    String author1 = parts1[2];
+                    int id3 = Integer.parseInt(id2);
+
+                    generator.textbarCode(id3);
+                    int barCode1 = generator.getCurrentbarCode();
+
+                    Book book = new Book(barCode1, title1, author1);
+
+                    library.addBook(book);
+                }
+            }
+            customFile.close();
+            System.out.println("Updated library collection.");
+            //Handle file not found error
+        } catch (FileNotFoundException e) {
+            System.out.println("An error has occurred. You will be returned to the Main Menu to try again.");
+            e.printStackTrace();
+        }
+        for (Book book : library.getBooks()) {
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
         }
     }
 }

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.*;
 import java.io.*;
-import java.util.*;
+
 
 
 public class Main {
@@ -11,9 +11,10 @@ public class Main {
 
            ArrayList <Book> collection = new ArrayList<>();
            ArrayList <Book> checkedOut = new ArrayList<>();
+           ArrayList <Book> removedBooks = new ArrayList<>();
            ArrayList<Integer> idList = new ArrayList<>();
 
-           Library library = new Library(collection, checkedOut);
+           Library library = new Library(collection, checkedOut, removedBooks);
            //Library libraryCO = new Library(checkedOut);
            Barcode generator = new Barcode(idList);
 
@@ -21,10 +22,17 @@ public class Main {
 
            FileReader fileReader = new FileReader("Books.txt", collection, library, idList, generator);
            FileReader borrowedReader = new FileReader("CheckedOut.txt",checkedOut, library, idList, generator);
+           FileReader removedReader = new FileReader("RemovedBooks.txt", removedBooks, library,idList, generator);
+
            FWriter fileWriter = new FWriter("Books.txt", collection, library);
            FWriter outWrite = new FWriter("CheckedOut.txt", checkedOut, library);
+           FWriter removeWrite = new FWriter("RemovedBooks.txt", removedBooks, library);
 
-           fileReader.readPrintFile();
+           ViaTitle viaTitle = new ViaTitle(library, fileWriter, removeWrite, outWrite);
+           ViaBarcode viaBarcode = new ViaBarcode(library, fileWriter,removeWrite, outWrite);
+
+
+        fileReader.readPrintFile();
            borrowedReader.readCheckedOut();
 
            while(true) {
@@ -37,7 +45,8 @@ public class Main {
                System.out.println("5. Display books currently checked-out");
                System.out.println("6. Remove a book from the collection");
                System.out.println("7. Check in a book");
-               System.out.println("8. Exit");
+               System.out.println("8. Upload a text file");
+               System.out.println("9. Exit");
                System.out.println("Enter Your Choice: ");
 
                choice = scanner.nextInt();
@@ -52,6 +61,7 @@ public class Main {
                         */
                        fileWriter.writeToFile();
                        outWrite.writeCheckedOut();
+                       removeWrite.writeRemoved();
                        System.out.println("Your text files has been updated.");
                        break;
 
@@ -107,34 +117,32 @@ public class Main {
                         * kept occurring.
                         */
                        int borrowedBarcode;
-                       boolean askedRemoved;
+                       boolean askedOut;
 
-                       System.out.println("Which book would you like to check-out?");
+                       System.out.println("Check-out Menu:");
+                       System.out.println("1. Check-out by title");
+                       System.out.println("2. Check-out by barcode");
+                       System.out.println("3. Return to Main Menu");
+                       System.out.println("Choose a option: ");
+                       int checkedoutMenu = scanner.nextInt();
+                       scanner.nextLine();
 
-                       while (true) {
-
-                           System.out.println("To begin checking out, please provide the book's barcode:");
-                           borrowedBarcode = scanner.nextInt();
-                           Iterator<Book> iterator = library.getBooks().iterator();
-                           while (iterator.hasNext()) {
-                               Book book = iterator.next();
-                               if (book.getbarCode() == borrowedBarcode) {
-                                   iterator.remove();
-                                   library.addBorrowed(book);
-                                   askedRemoved = true;
-                               } else {
-                                   askedRemoved = false;
-                               }
-                           }
-                           break;
+                       switch (checkedoutMenu) {
+                           case 1:
+                               //via title
+                               viaTitle.borrowedViaTitle();
+                               break;
+                           case 2:
+                               //via Barcode
+                               viaBarcode.checkedoutViaBarcode();
+                               break;
+                           case 3:
+                               System.out.println("Returning to the Main Menu, Please wait...");
+                               break;
+                           default:
+                               System.out.println("Invalid option");
+                               break;
                        }
-                       for (Book book : library.getCheckedOut()) {
-                           fileWriter.writeToFile();
-                           outWrite.writeCheckedOut();
-                           System.out.println("Book successfully checked out.");
-                           System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
-                       }
-
                        break;
 
                    case 4:
@@ -152,7 +160,7 @@ public class Main {
                    case 5:
                        /*
                         * Option 5
-                        * Displays all books that were removed from the collection at the moment.
+                        * Displays all books that were checked-out from the library.
                         * loops through borrowed collection and returns each book to be printed
                         */
                        System.out.println("Checked-out books:");
@@ -162,6 +170,41 @@ public class Main {
                        break;
 
                    case 6:
+                       /*
+                        *  Option 6
+                        *
+                        */
+                       int removedBarcode;
+                       String removedTitle;
+                       boolean askedRemoved;
+
+                       System.out.println("Removal Menu:");
+                       System.out.println("1. Remove by title");
+                       System.out.println("2. Remove by barcode");
+                       System.out.println("3. Return to Main Menu");
+                       System.out.println("Choose a option: ");
+                       int removalMenu = scanner.nextInt();
+
+                       /*
+                        *   Sub Menu for book removal options
+                        *
+                        */
+                       switch (removalMenu) {
+                           case 1:
+                               //via title
+                               viaTitle.removalViaTitle();
+                           break;
+                           case 2:
+                               //via barcode
+                               viaBarcode.removalViaBarcode();
+                               break;
+                           case 3:
+                               System.out.println("Returning to the Main Menu, Please wait...");
+                               break;
+                           default:
+                               System.out.println("Invalid option");
+                               break;
+                          }
                        break;
 
                    case 7:
@@ -182,37 +225,37 @@ public class Main {
                        boolean anotherIn = true;
                        String option;
 
-                   while(anotherIn){
-                       System.out.println("Please provide the barcode # of the book you're returning today.");
-                       returnedBarcode = scanner.nextInt();
-                       scanner.hasNextLine();
+                       while (anotherIn) {
+                           System.out.println("Please provide the barcode # of the book you're returning today.");
+                           returnedBarcode = scanner.nextInt();
+                           scanner.hasNextLine();
 
-                       Iterator<Book> iterator = library.getCheckedOut().iterator();
+                           Iterator<Book> iterator = library.getCheckedOut().iterator();
 
-                       while (iterator.hasNext()) {
-                           Book book = iterator.next();
-                           if (book.getbarCode() == returnedBarcode) {
-                               iterator.remove();
-                               library.addBook(book);
-                               found = true;
-                               System.out.println("Successful check in.");
-                               scanner.nextLine();
-                               System.out.println("Would you like to check-in another book? Yes or No?");
-                               option = scanner.nextLine();
+                           while (iterator.hasNext()) {
+                               Book book = iterator.next();
+                               if (book.getbarCode() == returnedBarcode) {
+                                   iterator.remove();
+                                   library.addBook(book);
+                                   found = true;
+                                   System.out.println("Successful check in.");
+                                   scanner.nextLine();
+                                   System.out.println("Would you like to check-in another book? Yes or No?");
+                                   option = scanner.nextLine();
 
-                               if (!option.equalsIgnoreCase("Yes")) {
-                                   anotherIn = false;
+                                   if (!option.equalsIgnoreCase("Yes")) {
+                                       anotherIn = false;
+                                   }
+                                   break;
                                }
-                               break;
+                               found = false;
                            }
-                           found = false;
-                       }
 
-                       if(!found) {
-                           System.out.println("That book is not currently checked-out.");
-                           anotherIn = false;
-                     }
-                   }
+                           if (!found) {
+                               System.out.println("That book is not currently checked-out.");
+                               anotherIn = false;
+                           }
+                       }
                        System.out.println("Thank you for returning your books.");
                        System.out.println();
                        System.out.println("Here is the current Book List after returns.");
@@ -222,6 +265,16 @@ public class Main {
                        break;
 
                    case 8:
+                       scanner.nextLine();
+                       System.out.println("Name of text file. ex. Textfile.txt :");
+                       String yourBooks = scanner.nextLine();
+
+                       FileReader uploadTextFile = new FileReader(yourBooks, collection, library, idList, generator);
+                       System.out.println("Upload taking place, please wait...");
+                       uploadTextFile.readYourText();
+                       break;
+
+                   case 9:
                        //Option 6
                        //Displays goodbye message and exits application
                        System.out.println("Goodbye!");
