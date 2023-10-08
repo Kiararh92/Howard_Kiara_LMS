@@ -12,6 +12,8 @@ public class Library{
     public ArrayList <Book> checkedOut;
 
     public ArrayList <Book> removedBooks;
+
+    public ArrayList <Book> newBooks;
     /*
      * Constructs a new Library object.
      *
@@ -19,10 +21,11 @@ public class Library{
      *                   Pass an existing ArrayList or creat a new one to initialize
      *                   the library's collection.
      */
-    public Library(ArrayList <Book> collection, ArrayList <Book> checkedOut, ArrayList <Book> removedBooks) {
+    public Library(ArrayList <Book> collection, ArrayList <Book> checkedOut, ArrayList <Book> removedBooks, ArrayList <Book> newBooks) {
         this.collection = collection;
         this.checkedOut = checkedOut;
         this.removedBooks = removedBooks;
+        this.newBooks = newBooks;
     }
     /*
      * Adds a new book to the collection.
@@ -46,6 +49,8 @@ public class Library{
     public void addRemoved(Book book) {
         removedBooks.add(book);
     }
+
+
 
 /*    public void checkIn(Book book) {
         collection.add(book);

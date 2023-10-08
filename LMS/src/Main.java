@@ -12,10 +12,11 @@ public class Main {
            ArrayList <Book> collection = new ArrayList<>();
            ArrayList <Book> checkedOut = new ArrayList<>();
            ArrayList <Book> removedBooks = new ArrayList<>();
+           ArrayList <Book> newBooks = new ArrayList<>();
+
            ArrayList<Integer> idList = new ArrayList<>();
 
-           Library library = new Library(collection, checkedOut, removedBooks);
-           //Library libraryCO = new Library(checkedOut);
+           Library library = new Library(collection, checkedOut, removedBooks, newBooks);
            Barcode generator = new Barcode(idList);
 
            int choice;
@@ -32,7 +33,7 @@ public class Main {
            ViaBarcode viaBarcode = new ViaBarcode(library, fileWriter,removeWrite, outWrite);
 
 
-        fileReader.readPrintFile();
+           fileReader.readPrintFile();
            borrowedReader.readCheckedOut();
 
            while(true) {
@@ -225,42 +226,31 @@ public class Main {
                        boolean anotherIn = true;
                        String option;
 
-                       while (anotherIn) {
-                           System.out.println("Please provide the barcode # of the book you're returning today.");
-                           returnedBarcode = scanner.nextInt();
-                           scanner.hasNextLine();
+                       System.out.println("Check-In Menu:");
+                       System.out.println("1. Check-In by title");
+                       System.out.println("2. Check-In by barcode");
+                       System.out.println("3. Return to Main Menu");
+                       System.out.println("Choose a option: ");
+                       int returnMenu = scanner.nextInt();
 
-                           Iterator<Book> iterator = library.getCheckedOut().iterator();
-
-                           while (iterator.hasNext()) {
-                               Book book = iterator.next();
-                               if (book.getbarCode() == returnedBarcode) {
-                                   iterator.remove();
-                                   library.addBook(book);
-                                   found = true;
-                                   System.out.println("Successful check in.");
-                                   scanner.nextLine();
-                                   System.out.println("Would you like to check-in another book? Yes or No?");
-                                   option = scanner.nextLine();
-
-                                   if (!option.equalsIgnoreCase("Yes")) {
-                                       anotherIn = false;
-                                   }
-                                   break;
-                               }
-                               found = false;
-                           }
-
-                           if (!found) {
-                               System.out.println("That book is not currently checked-out.");
-                               anotherIn = false;
-                           }
-                       }
-                       System.out.println("Thank you for returning your books.");
-                       System.out.println();
-                       System.out.println("Here is the current Book List after returns.");
-                       for (Book book1 : library.getBooks()) {
-                           System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor());
+                       /*
+                        *   Sub Menu for book check-ins
+                        */
+                       switch (returnMenu) {
+                           case 1:
+                               //via title
+                               viaTitle.returnViaTitle();
+                               break;
+                           case 2:
+                               //via barcode
+                               viaBarcode.returnViaBarcode();
+                               break;
+                           case 3:
+                               System.out.println("Returning to the Main Menu, Please wait...");
+                               break;
+                           default:
+                               System.out.println("Invalid option");
+                               break;
                        }
                        break;
 

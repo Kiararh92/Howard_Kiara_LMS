@@ -16,7 +16,10 @@ public class ViaTitle {
     private final FWriter outWrite;
     String removedTitle;
     String borrowedTitle;
+    String returnedTitle;
     boolean askedRemoved;
+    boolean askedOut;
+    boolean askReturn;
 
 
     public ViaTitle(Library library,FWriter fileWriter,FWriter removeWrite,FWriter outWrite) {
@@ -52,7 +55,7 @@ public class ViaTitle {
             System.out.println("Book successfully deleted.");
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
         }
-        System.out.println("\n");
+        System.out.println("Book Deletion Finished. \n");
         System.out.println("Here is the current library collection after deletion.");
         for(Book book : library.getBooks()) {
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
@@ -71,9 +74,9 @@ public class ViaTitle {
                 if (Objects.equals(book.getTitle(), borrowedTitle)) {
                     iterator.remove();
                     library.addBorrowed(book);
-                    askedRemoved = true;
+                    askedOut = true;
                 } else {
-                    askedRemoved = false;
+                    askedOut = false;
                 }
             }
             break;
@@ -84,12 +87,44 @@ public class ViaTitle {
             outWrite.writeCheckedOut();
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
         }
-        System.out.println("\n");
+        System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
         for(Book book : library.getBooks()) {
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
         }
     }
 
+    public void returnViaTitle() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Please provide the title of the book you would like to return today: ");
+            returnedTitle = scanner.nextLine();
+            Iterator<Book> iterator = library.getCheckedOut().iterator();
+            while (iterator.hasNext()) {
+                Book book = iterator.next();
+                if (Objects.equals(book.getTitle(), returnedTitle)) {
+                    iterator.remove();
+                    library.addBook(book);
+                    System.out.println("Book successfully checked-in.");
+                    //System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+                    askReturn = true;
+                } else {
+                    System.out.println("That book is not currently checked-out.");
+                    askReturn = false;
+                }
+            }
+            break;
+        }
+        for (Book book : library.getBooks()) {
+            outWrite.writeCheckedOut();
+            fileWriter.writeToFile();
+        }
+        System.out.println("Thank you for returning your books today. \n");
+        System.out.println("Here is the current library collection after returning your books.");
+        for (Book book : library.getBooks()) {
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+        }
+    }
 }
 

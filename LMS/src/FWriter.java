@@ -1,12 +1,15 @@
 import java.io.*;
 import java.util.*;
-
+/*
+ * Kiara Howard, Software Dev I, 9/14/23
+ * Class Name FWriter
+ * This class handles the writing to a specific text file, when
+ * the status of a book is changed and saved.
+ */
 public class FWriter {
     private final Library library;
     private final ArrayList<Book> collection;
     private final String fileUpdate;
-
-    //private final String bfileUpdate;
 
 
     public FWriter(String fileUpdate, ArrayList<Book> collection, Library library) {

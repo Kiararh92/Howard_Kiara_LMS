@@ -1,5 +1,13 @@
 import java.io.*;
 import java.util.*;
+
+/*
+ * Kiara Howard, Software Dev I, 9/10/23
+ * Class Name FileReader
+ * This class handles uploading, scanning, and printing from
+ * a text file either by a predefined text file or a custom one
+ * that is input by the user.
+ */
 public class FileReader {
     Scanner scanner = new Scanner(System.in);
     private final Library library;
