@@ -115,6 +115,7 @@ public class ViaTitle {
                     int inBarcode = book.getbarCode();
                     iterator.remove();
                     library.addBook(book);
+                    library.dueDateStatus(book.getdueDate());
                     library.updateStatus(inBarcode, "Available");
                     book.setdueDate(null);
                     System.out.println("Book successfully checked-in.");

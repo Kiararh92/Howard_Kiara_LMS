@@ -80,7 +80,8 @@ public class ViaBarcode {
                 Book book = iterator.next();
                 if (book.getbarCode() == borrowedBarcode) {
                     library.updateStatus(borrowedBarcode, "Checked-Out");
-                    LocalDate dueDate = LocalDate.now().plusDays(14);
+                   // LocalDate dueDate = LocalDate.now().plusDays(14);
+                    LocalDate dueDate = LocalDate.now().minusDays(2);
                     book.setdueDate(dueDate);
                     iterator.remove();
                     library.addBorrowed(book);
@@ -117,6 +118,7 @@ public class ViaBarcode {
                 if (Objects.equals(book.getbarCode(), returnedBarcode)) {
                     iterator.remove();
                     library.addBook(book);
+                    library.dueDateStatus(book.getdueDate());
                     library.updateStatus(returnedBarcode, "Available");
                     book.setdueDate(null);
                     found = true;
