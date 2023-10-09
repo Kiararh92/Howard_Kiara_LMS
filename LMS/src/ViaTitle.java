@@ -30,7 +30,18 @@ public class ViaTitle {
         this.removeWrite = removeWrite;
         this.outWrite = outWrite;
     }
-
+    /*
+     * Removes a book from the collection via Title
+     * compares entered title to the one in the collection
+     * If there's a match in the collection, the deletion process for book
+     * begins and adds it to a removal collection.
+     * Updates the status of that book.
+     * Displays if book was successfully removed from the database
+     * with its information.
+     *
+     * Used an iterator as the error ConcurrentModificationException
+     * kept occurring.
+     */
     public void removalViaTitle() {
 
         Scanner scanner = new Scanner(System.in);
@@ -66,6 +77,17 @@ public class ViaTitle {
         }
     }
 
+    /*
+     * Check out a book from the collection via Title
+     * compares entered title to the one in the collection
+     * If there's a match in the collection, the check-out process for book
+     * begins and adds it to a borrowed collection.
+     * Sets a due Date and the status of the book for check out.
+     * Displays if book was successfully checked-out with its information.
+     *
+     * Used an iterator as the error ConcurrentModificationException
+     * kept occurring.
+     */
     public void borrowedViaTitle() {
         Scanner scanner = new Scanner(System.in);
 
@@ -101,7 +123,19 @@ public class ViaTitle {
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
-
+    /*
+     * Check-in/return a borrowed book via Title.
+     * compares entered title to title in the checked out checked-out List
+     * If title is in the checked-out List, then removes that book
+     * from the checked-out List and adds it back to the book collection.
+     * Checks the due date status and returns a messages regarding the due date.
+     * Updates the status of the book.
+     * Displays if book was successfully checked in.
+     * Displays the current book collection after books are returned.
+     *
+     * Used an iterator as the error ConcurrentModificationException
+     * kept occurring.
+     */
     public void returnViaTitle() {
         Scanner scanner = new Scanner(System.in);
 

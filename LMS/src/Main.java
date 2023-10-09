@@ -144,11 +144,11 @@ public static void main(String[] args) {
 
                        switch (checkedoutMenu) {
                            case 1:
-                               //via title
+                               //select a book via title
                                viaTitle.borrowedViaTitle();
                                break;
                            case 2:
-                               //via Barcode
+                               //select a book via Barcode
                                 viaBarcode.checkedoutViaBarcode();
                                break;
                            case 3:
@@ -187,12 +187,10 @@ public static void main(String[] args) {
                    case 6:
                        /*
                         *  Option 6
-                        *
+                        *  Remove/delete a book from the collection.
+                        *  Removal submenu: different options
+                        *           to search for a book.
                         */
-                       int removedBarcode;
-                       String removedTitle;
-                       boolean askedRemoved;
-
                        System.out.println("Removal Menu:");
                        System.out.println("1. Remove by title");
                        System.out.println("2. Remove by barcode");
@@ -200,10 +198,6 @@ public static void main(String[] args) {
                        System.out.println("Choose a option: ");
                        int removalMenu = scanner.nextInt();
 
-                       /*
-                        *   Sub Menu for book removal options
-                        *
-                        */
                        switch (removalMenu) {
                            case 1:
                                //via title
@@ -225,15 +219,7 @@ public static void main(String[] args) {
                    case 7:
                        /*
                         * Option 7
-                        * Check-in/return a borrowed book via Barcode #.
-                        * compares entered barcode to barcode in the checked out checked-out List
-                        * If barcode is in the checked-out List, then removes that book
-                        * from the checked-out List and adds it back to the book collection.
-                        * Displays if book was successfully checked in.
-                        * Displays the current book collection after books are returned.
-                        *
-                        * Used an iterator as the error ConcurrentModificationException
-                        * kept occurring.
+                        * Submenu for returning a borrowed book.
                         */
 
                        System.out.println("Check-In Menu:");
@@ -243,9 +229,6 @@ public static void main(String[] args) {
                        System.out.println("Choose a option: ");
                        int returnMenu = scanner.nextInt();
 
-                       /*
-                        *   Sub Menu for book check-ins
-                        */
                        switch (returnMenu) {
                            case 1:
                                //via title
@@ -265,6 +248,11 @@ public static void main(String[] args) {
                        break;
 
                    case 8:
+                       /*
+                        * Option 8
+                        * Provides the user with the ability to upload their
+                        * own text file.
+                        */
                        scanner.nextLine();
                        System.out.println("Name of text file. ex. Textfile.txt :");
                        String yourBooks = scanner.nextLine();
@@ -275,7 +263,7 @@ public static void main(String[] args) {
                        break;
 
                    case 9:
-                       //Option 6
+                       //Option 9
                        //Displays goodbye message and exits application
                        System.out.println("Goodbye!");
                        System.exit(0);

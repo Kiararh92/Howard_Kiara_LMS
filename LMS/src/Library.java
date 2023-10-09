@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Library{
@@ -90,7 +91,8 @@ public class Library{
     public void dueDateStatus(LocalDate dueDate) {
         LocalDate currentDate = LocalDate.now();
         if (currentDate.isAfter(dueDate)) {
-            System.out.println("BOOK IS OVERDUE! ");
+            long overDue = ChronoUnit.DAYS.between(dueDate, currentDate);
+            System.out.println("This book is OVERDUE by: " + overDue + " days. It was DUE on: " + dueDate);
         } else {
             System.out.println("Book was returned on time.");
         }

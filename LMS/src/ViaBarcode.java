@@ -34,6 +34,18 @@ public class ViaBarcode {
         this.outWrite = outWrite;
     }
 
+    /*
+     * Removes a book from the collection via Barcode
+     * compares entered barcode to the one in the collection
+     * If there's a match in the collection, the deletion process for book
+     * begins and adds it to a removal collection.
+     * Updates the status of that book.
+     * Displays if book was successfully removed from the database
+     * with its information.
+     *
+     * Used an iterator as the error ConcurrentModificationException
+     * kept occurring.
+     */
     public void removalViaBarcode(){
 
         Scanner scanner = new Scanner(System.in);
@@ -68,6 +80,17 @@ public class ViaBarcode {
         }
     }
 
+    /*
+     * Check out a book from the collection via Barcode #
+     * compares entered barcode to the one in the collection
+     * If there's a match in the collection, the check-out process for book
+     * begins and adds it to a borrowed collection.
+     * Sets a due Date and the status of the book for check out.
+     * Displays if book was successfully checked-out with its information.
+     *
+     * Used an iterator as the error ConcurrentModificationException
+     * kept occurring.
+     */
     public void checkedoutViaBarcode(){
         Scanner scanner = new Scanner(System.in);
 
@@ -80,8 +103,8 @@ public class ViaBarcode {
                 Book book = iterator.next();
                 if (book.getbarCode() == borrowedBarcode) {
                     library.updateStatus(borrowedBarcode, "Checked-Out");
-                   // LocalDate dueDate = LocalDate.now().plusDays(14);
-                    LocalDate dueDate = LocalDate.now().minusDays(2);
+                    LocalDate dueDate = LocalDate.now().plusDays(14);
+                    //LocalDate dueDate = LocalDate.now().minusDays(2);
                     book.setdueDate(dueDate);
                     iterator.remove();
                     library.addBorrowed(book);
@@ -104,7 +127,19 @@ public class ViaBarcode {
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
-
+    /*
+     *  Check-in/return a borrowed book via Barcode #.
+     * compares entered barcode to barcode in the checked out checked-out List
+     * If barcode is in the checked-out List, then removes that book
+     * from the checked-out List and adds it back to the book collection.
+     * Checks the due date status and returns a messages regarding the due date.
+     * Updates the status of the book.
+     * Displays if book was successfully checked in.
+     * Displays the current book collection after books are returned.
+     *
+     * Used an iterator as the error ConcurrentModificationException
+     * kept occurring.
+     */
     public void returnViaBarcode() {
         Scanner scanner = new Scanner(System.in);
 
