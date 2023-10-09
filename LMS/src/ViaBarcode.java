@@ -4,7 +4,7 @@ import java.io.*;
 
 /*
  * Kiara Howard, Software Dev I, 10/05/23
- * Class Name Library
+ * Class Name ViaBarcode
  * This class helps reduce redundancy when handling features
  * that deal with finding a book by its barcode.
  * @param removedBarcode User input barcode of a book to be deleted.

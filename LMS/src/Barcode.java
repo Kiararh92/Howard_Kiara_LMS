@@ -17,7 +17,6 @@ public class Barcode {
     String checkTaken;
     boolean found = true;
     public ArrayList<Integer> idList;
-    //ArrayList<Integer> idList = new ArrayList<>();
 
     public Barcode(ArrayList<Integer> idList) {
         this.idList = idList;

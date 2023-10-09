@@ -3,7 +3,7 @@ import java.util.*;
 
 /*
  * Kiara Howard, Software Dev I, 10/05/23
- * Class Name Library
+ * Class Name ViaTitle
  * This class helps reduce redundancy when handling features
  * that deal with finding a book via a title.
  * @param removedTitle User input title of a book to be deleted.
