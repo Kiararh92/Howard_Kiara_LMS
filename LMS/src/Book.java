@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.*;
 /*
  * Kiara Howard, Software Dev I, 9/10/23
@@ -12,6 +13,7 @@ public class Book{
     int barCode;
     String genre;
     String status;
+    LocalDate dueDate;
 
     /*
      * Constructs a new Book object with the given title, author,
@@ -28,6 +30,7 @@ public class Book{
         this.author = author;
         this.status = "Available";
         this.genre = genre;
+        this.dueDate = null;
     }
     /*
      * Receives the Barcode of the book
@@ -72,5 +75,12 @@ public class Book{
     }
     public void setGenre(String genre){
         this.genre = genre;
+    }
+
+    public LocalDate getdueDate(){
+        return dueDate;
+    }
+    public void setdueDate(LocalDate dueDate){
+        this.dueDate = dueDate;
     }
 }

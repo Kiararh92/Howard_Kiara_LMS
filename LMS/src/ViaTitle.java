@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.*;
 
 /*
@@ -77,6 +78,8 @@ public class ViaTitle {
                 if (Objects.equals(book.getTitle(), borrowedTitle)) {
                     int outBarcode = book.getbarCode();
                     library.updateStatus(outBarcode, "Checked-Out");
+                    LocalDate dueDate = LocalDate.now().plusDays(14);
+                    book.setdueDate(dueDate);
                     iterator.remove();
                     library.addBorrowed(book);
                     askedOut = true;
@@ -90,7 +93,7 @@ public class ViaTitle {
         for(Book book : library.getCheckedOut()) {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+            System.out.println(book.getbarCode() + "," + book.getTitle() + "," + book.getGenre() + " by " + book.getAuthor() + " due on " + book.getdueDate());
         }
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
@@ -113,6 +116,7 @@ public class ViaTitle {
                     iterator.remove();
                     library.addBook(book);
                     library.updateStatus(inBarcode, "Available");
+                    book.setdueDate(null);
                     System.out.println("Book successfully checked-in.");
                     askReturn = true;
                 } else {

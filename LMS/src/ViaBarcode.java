@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.*;
 import java.io.*;
 
@@ -79,6 +80,8 @@ public class ViaBarcode {
                 Book book = iterator.next();
                 if (book.getbarCode() == borrowedBarcode) {
                     library.updateStatus(borrowedBarcode, "Checked-Out");
+                    LocalDate dueDate = LocalDate.now().plusDays(14);
+                    book.setdueDate(dueDate);
                     iterator.remove();
                     library.addBorrowed(book);
                     askedOut = true;
@@ -92,7 +95,7 @@ public class ViaBarcode {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
             System.out.println("Book successfully checked out.");
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+            System.out.println(book.getbarCode() + "," + book.getTitle() + "," + book.getGenre() + " by " + book.getAuthor() + " due on " + book.getdueDate());
         }
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
@@ -115,6 +118,7 @@ public class ViaBarcode {
                     iterator.remove();
                     library.addBook(book);
                     library.updateStatus(returnedBarcode, "Available");
+                    book.setdueDate(null);
                     found = true;
                     System.out.println("Book successfully checked-in.");
                     System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
