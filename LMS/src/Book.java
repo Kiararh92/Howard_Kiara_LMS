@@ -2,8 +2,8 @@ import java.util.*;
 /*
  * Kiara Howard, Software Dev I, 9/10/23
  * Class Name Book
- * This class gathers and sets the author, title, and barcode of a
- * book.
+ * This class gathers and sets the author, title, status,
+ * genre, and barcode of a book.
  */
 public class Book{
 
@@ -15,15 +15,19 @@ public class Book{
 
     /*
      * Constructs a new Book object with the given title, author,
-     * and isbn.
+     * status, genre, and isbn.
      * @param isbn The ISBN/ID # of the book.
      * @param title The tile of the book.
      * @param author The author of the book.
+     * @param status The current status of the book.
+     * @param genre The genre of the book.
      */
-    public Book(int barCode, String title, String author) {
+    public Book(int barCode, String title, String author, String genre) {
         this.barCode = barCode;
         this.title = title;
         this.author = author;
+        this.status = "Available";
+        this.genre = genre;
     }
     /*
      * Receives the Barcode of the book
@@ -54,5 +58,19 @@ public class Book{
 
     public void setAuthor(String author){
         this.author = author;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getGenre(){
+        return genre;
+    }
+    public void setGenre(String genre){
+        this.genre = genre;
     }
 }

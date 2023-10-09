@@ -21,8 +21,7 @@ public class FWriter {
     public void writeToFile() {
         try(FileWriter myWriter = new FileWriter(fileUpdate)) {
             for (Book book : library.getBooks()) {
-                //System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
-                String line = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor();
+                String line = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
                 myWriter.write(line + "\n");
             }
         } catch (IOException e) {
@@ -34,8 +33,7 @@ public class FWriter {
     public void writeCheckedOut() {
         try(FileWriter outWrite = new FileWriter(fileUpdate)) {
             for (Book book : library.getCheckedOut()) {
-                //System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
-                String line1 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor();
+                String line1 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
                 outWrite.write(line1 + "\n");
             }
         } catch (IOException e) {
@@ -47,8 +45,7 @@ public class FWriter {
     public void writeRemoved() {
         try (FileWriter removeWrite = new FileWriter(fileUpdate)) {
             for (Book book : library.getRemoved()) {
-                //System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
-                String line2 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor();
+                String line2 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
                 removeWrite.write(line2 + "\n");
             }
         } catch (IOException e) {

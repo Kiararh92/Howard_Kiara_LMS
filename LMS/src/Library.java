@@ -13,7 +13,8 @@ public class Library{
 
     public ArrayList <Book> removedBooks;
 
-    public ArrayList <Book> newBooks;
+    String newStatus;
+
     /*
      * Constructs a new Library object.
      *
@@ -21,11 +22,10 @@ public class Library{
      *                   Pass an existing ArrayList or creat a new one to initialize
      *                   the library's collection.
      */
-    public Library(ArrayList <Book> collection, ArrayList <Book> checkedOut, ArrayList <Book> removedBooks, ArrayList <Book> newBooks) {
+    public Library(ArrayList <Book> collection, ArrayList <Book> checkedOut, ArrayList <Book> removedBooks) {
         this.collection = collection;
         this.checkedOut = checkedOut;
         this.removedBooks = removedBooks;
-        this.newBooks = newBooks;
     }
     /*
      * Adds a new book to the collection.
@@ -50,13 +50,6 @@ public class Library{
         removedBooks.add(book);
     }
 
-
-
-/*    public void checkIn(Book book) {
-        collection.add(book);
-        checkedOut.remove(book);
-    }
- */
     /*
      * Retrieves the collection of books in the library.
      *
@@ -73,8 +66,23 @@ public class Library{
     public ArrayList<Book> getCheckedOut() {
         return checkedOut;
     }
-
+    /*
+     * Retrieves the collection of books deleted from the library.
+     *
+     * @return An ArrayList containing all books that have been deleted.
+     */
     public ArrayList <Book> getRemoved(){
         return removedBooks;
+    }
+    /*
+     * Updates a books current status depending on which, function is calling
+     * it.
+     */
+    public void updateStatus(int barCode, String newStatus){
+        for(Book book : getBooks()) {
+            if(book.getbarCode() == barCode) {
+                book.setStatus(newStatus);
+            }
+        }
     }
 }

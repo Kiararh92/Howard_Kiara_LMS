@@ -22,7 +22,7 @@ public class ViaBarcode {
 
     boolean askedRemoved;
     boolean askedOut;
-    boolean found = false;
+    boolean found = true;
     boolean anotherIn = true;
     String option;
 
@@ -44,6 +44,7 @@ public class ViaBarcode {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (book.getbarCode() == removedBarcode) {
+                    library.updateStatus(removedBarcode, "Removed");
                     iterator.remove();
                     library.addRemoved(book);
                     askedRemoved = true;
@@ -57,12 +58,12 @@ public class ViaBarcode {
             fileWriter.writeToFile();
             removeWrite.writeRemoved();
             System.out.println("Book successfully deleted.");
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
         System.out.println("Book Deletion Finished. \n");
         System.out.println("Here is the current library collection after deletion.");
         for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
 
@@ -77,6 +78,7 @@ public class ViaBarcode {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (book.getbarCode() == borrowedBarcode) {
+                    library.updateStatus(borrowedBarcode, "Checked-Out");
                     iterator.remove();
                     library.addBorrowed(book);
                     askedOut = true;
@@ -90,12 +92,12 @@ public class ViaBarcode {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
             System.out.println("Book successfully checked out.");
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
         for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
 
@@ -106,27 +108,17 @@ public class ViaBarcode {
             System.out.println("Please provide the barcode # of the book you're returning today.");
             returnedBarcode = scanner.nextInt();
             scanner.hasNextLine();
-
             Iterator<Book> iterator = library.getCheckedOut().iterator();
-
             while (iterator.hasNext()) {
                 Book book = iterator.next();
-                if (book.getbarCode() == returnedBarcode) {
+                if (Objects.equals(book.getbarCode(), returnedBarcode)) {
                     iterator.remove();
                     library.addBook(book);
+                    library.updateStatus(returnedBarcode, "Available");
                     found = true;
                     System.out.println("Book successfully checked-in.");
-                    System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
-                    scanner.nextLine();
-                    System.out.println("Would you like to check-in another book? Yes or No?");
-                    option = scanner.nextLine();
-
-                    if (!option.equalsIgnoreCase("Yes")) {
-                        anotherIn = false;
-                    }
-                    //System.out.println("Successful check in.");
-                    //break;
-                } else {
+                    System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+                } else if (!library.getCheckedOut().contains(returnedBarcode)){
                     found = false;
                 }
                 if (!found) {
@@ -137,19 +129,12 @@ public class ViaBarcode {
             }
             break;
         }
-        //found = false;
-//        for (Book book : library.getBooks()) {
-//            fileWriter.writeCheckedOut();
-//            outWrite.writeToFile();
-//            //System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
-//        }
-
         System.out.println("Thank you for returning your books.\n");
-        System.out.println("Here is the current library collection after checking out.");
+        System.out.println("Here is the current library collection after returning your books.");
         for (Book book1 : library.getBooks()) {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
-            System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor());
+            System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor() + " " + book1.getGenre());
         }
     }
 }

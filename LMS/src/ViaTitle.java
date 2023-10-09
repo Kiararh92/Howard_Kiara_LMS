@@ -7,7 +7,8 @@ import java.util.*;
  * that deal with finding a book via a title.
  * @param removedTitle User input title of a book to be deleted.
  * @param borrowedTitle User input title for the book they want to check out.
- * @param
+ * @param returnedTitle User input title for the book they
+ *                          wish to return/check in.
  */
 public class ViaTitle {
     private final Library library;
@@ -40,6 +41,8 @@ public class ViaTitle {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (Objects.equals(book.getTitle(), removedTitle)) {
+                    int reBarcode = book.getbarCode();
+                    library.updateStatus(reBarcode, "Deleted");
                     iterator.remove();
                     library.addRemoved(book);
                     askedRemoved = true;
@@ -53,12 +56,12 @@ public class ViaTitle {
             fileWriter.writeToFile();
             removeWrite.writeRemoved();
             System.out.println("Book successfully deleted.");
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
         System.out.println("Book Deletion Finished. \n");
         System.out.println("Here is the current library collection after deletion.");
         for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
 
@@ -72,6 +75,8 @@ public class ViaTitle {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (Objects.equals(book.getTitle(), borrowedTitle)) {
+                    int outBarcode = book.getbarCode();
+                    library.updateStatus(outBarcode, "Checked-Out");
                     iterator.remove();
                     library.addBorrowed(book);
                     askedOut = true;
@@ -85,12 +90,12 @@ public class ViaTitle {
         for(Book book : library.getCheckedOut()) {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
         for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
 
@@ -104,10 +109,11 @@ public class ViaTitle {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (Objects.equals(book.getTitle(), returnedTitle)) {
+                    int inBarcode = book.getbarCode();
                     iterator.remove();
                     library.addBook(book);
+                    library.updateStatus(inBarcode, "Available");
                     System.out.println("Book successfully checked-in.");
-                    //System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
                     askReturn = true;
                 } else {
                     System.out.println("That book is not currently checked-out.");
@@ -123,7 +129,7 @@ public class ViaTitle {
         System.out.println("Thank you for returning your books today. \n");
         System.out.println("Here is the current library collection after returning your books.");
         for (Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
 }

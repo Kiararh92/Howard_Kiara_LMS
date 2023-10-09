@@ -31,16 +31,17 @@ public class FileReader {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] parts = data.split(",");
-                if (parts.length == 3) {
+                if (parts.length == 4) {
                     String id = parts[0];
                     String title = parts[1];
                     String author = parts[2];
+                    String genre = parts[3];
                     int id1 = Integer.parseInt(id);
 
                     generator.textbarCode(id1);
                     int barCode = generator.getCurrentbarCode();
 
-                    Book book = new Book(barCode, title, author);
+                    Book book = new Book(barCode, title, author, genre);
 
                     library.addBook(book);
                 }
@@ -54,10 +55,9 @@ public class FileReader {
         }
 
         for (Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor() + " " + book.getGenre());
         }
     }
-
 
     public void readCheckedOut() {
         try {
@@ -66,16 +66,17 @@ public class FileReader {
             while (borrowedReader.hasNextLine()) {
                 String data = borrowedReader.nextLine();
                 String[] parts = data.split(",");
-                if (parts.length == 3) {
+                if (parts.length == 4) {
                     String id = parts[0];
                     String title = parts[1];
                     String author = parts[2];
+                    String genre = parts[3];
                     int id1 = Integer.parseInt(id);
 
                     generator.textbarCode(id1);
                     int barCode = generator.getCurrentbarCode();
 
-                    Book book = new Book(barCode, title, author);
+                    Book book = new Book(barCode, title, author, genre);
 
                     library.addBorrowed(book);
                 }
@@ -88,7 +89,7 @@ public class FileReader {
             e.printStackTrace();
         }
         for (Book book : library.getCheckedOut()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " by " + book.getAuthor() + " " + book.getGenre());
         }
     }
 
@@ -101,16 +102,17 @@ public class FileReader {
             while (customFile.hasNextLine()) {
                 String data1 = customFile.nextLine();
                 String[] parts1 = data1.split(",");
-                if (parts1.length == 3) {
+                if (parts1.length == 4) {
                     String id2 = parts1[0];
                     String title1 = parts1[1];
                     String author1 = parts1[2];
+                    String genre1 = parts1[3];
                     int id3 = Integer.parseInt(id2);
 
                     generator.textbarCode(id3);
                     int barCode1 = generator.getCurrentbarCode();
 
-                    Book book = new Book(barCode1, title1, author1);
+                    Book book = new Book(barCode1, title1, author1, genre1);
 
                     library.addBook(book);
                 }
@@ -123,7 +125,7 @@ public class FileReader {
             e.printStackTrace();
         }
         for (Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
 }

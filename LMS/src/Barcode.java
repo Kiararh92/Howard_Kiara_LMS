@@ -1,4 +1,15 @@
 import java.util.ArrayList;
+/*
+ * Kiara Howard, Software Dev I, 10/08/23
+ * Class Name: Barcode
+ * This class creates, checks for available, and
+ * reassigns barcodes for each book that is entered.
+ * @param nextID Current number to check against.
+ * @param currentbarCode The final assigned barCode.
+ * @param checkTaken String if given barcode is already assigned
+ *          to a book.
+ * @param idList An ArrayList for storing the assigned barCodes.
+ */
 
 public class Barcode {
     int nextID = 0;
@@ -23,30 +34,23 @@ public class Barcode {
      */
     public void textbarCode(int barCode) {
         nextID = barCode;
-        while(found) {
+        while (found) {
             found = false;
             while (idList.contains(nextID)) {
                 found = true;
                 nextID++;
-                if(!found) {
-                  break;
+                if (!found) {
+                    break;
                 }
             }
-//            String checkTaken = "Barcode is already taken, choose another one.";
-//            System.out.println("The Barcode you enter was already taken, the system assigned a new one to this book.");
         }
-/*
-        if(!idList.isEmpty()) {
-            System.out.println("The Barcode you enter was already taken, the system assigned a new one to this book.");
+            if (!found) {
+                idList.add(nextID);
+                currentbarCode = nextID;
+                found = true;
+            }
         }
-*/
 
-        if(!found) {
-            idList.add(nextID);
-            currentbarCode = nextID;
-            found = true;
-        }
-    }
     /*
      * Receives the current available barCode number
      * and assigns it to be returned
@@ -57,8 +61,16 @@ public class Barcode {
         currentbarCode = nextID++;
         return currentbarCode;
     }
+    public void setCurrentbarCode(int currentbarCode){
+        this.currentbarCode = currentbarCode;
+    }
 
     public String getCheckTaken(){
         return checkTaken;
     }
+
+    public void setCheckTaken(String checkTaken){
+        this.checkTaken = checkTaken;
+    }
+
 }

@@ -2,21 +2,35 @@ import java.util.Scanner;
 import java.util.*;
 import java.io.*;
 
-
-
+/*
+ * Kiara Howard, Software Dev I, 9/10/23
+ * Class Name Main
+ * This class houses everything need to run the LMS program.
+ */
 public class Main {
-    public static void main(String[] args) {
+    /*
+     * Main Method for a Library Management System Consoled Based Application.
+     * This program will allow users to add, remove, and display the lists of
+     * books owned by the library.
+     *
+     * Displays the front end menu for user interaction
+     *
+     * Creates instances for the barCode # and the library.
+     * Creates an arraylist for the books in different stages.
+     *
+     * Calls the varies reader and writer methods to edit text files.
+     */
+public static void main(String[] args) {
 
            Scanner scanner = new Scanner(System.in);
 
            ArrayList <Book> collection = new ArrayList<>();
            ArrayList <Book> checkedOut = new ArrayList<>();
            ArrayList <Book> removedBooks = new ArrayList<>();
-           ArrayList <Book> newBooks = new ArrayList<>();
 
            ArrayList<Integer> idList = new ArrayList<>();
 
-           Library library = new Library(collection, checkedOut, removedBooks, newBooks);
+           Library library = new Library(collection, checkedOut, removedBooks);
            Barcode generator = new Barcode(idList);
 
            int choice;
@@ -86,12 +100,14 @@ public class Main {
                            int id1 = Integer.parseInt(id);
                            generator.textbarCode(id1);
                            int barCode = generator.getCurrentbarCode();
-                           System.out.println("title:");
+                           System.out.println("title: ");
                            String title = scanner.nextLine();
-                           System.out.println("author:");
+                           System.out.println("author: ");
                            String author = scanner.nextLine();
+                           System.out.println("genre: ");
+                           String genre = scanner.nextLine();
 
-                           Book book = new Book(barCode, title, author);
+                           Book book = new Book(barCode, title, author, genre);
                            library.addBook(book);
 
                            System.out.println("Would you like to add another book? Yes or No?");
@@ -108,17 +124,15 @@ public class Main {
                    case 3:
                        /*
                         * Option 3
-                        * Removes a book from the collection via Barcode #
-                        * compares entered barcode to barcode in the collection
-                        * If barcode is in the collection, then removes that book
-                        * from the collection and adds it to a borrowed collection.
-                        * Displays if book was successfully removed with information.
+                        * Check out a book from the collection via Barcode # or title
+                        * compares entered barcode or title to the one in the collection
+                        * If there's a match in the collection, the check-out process for book
+                        * begins and adds it to a borrowed collection.
+                        * Displays if book was successfully checked-out with its information.
                         *
                         * Used an iterator as the error ConcurrentModificationException
                         * kept occurring.
                         */
-                       int borrowedBarcode;
-                       boolean askedOut;
 
                        System.out.println("Check-out Menu:");
                        System.out.println("1. Check-out by title");
@@ -135,7 +149,7 @@ public class Main {
                                break;
                            case 2:
                                //via Barcode
-                               viaBarcode.checkedoutViaBarcode();
+                                viaBarcode.checkedoutViaBarcode();
                                break;
                            case 3:
                                System.out.println("Returning to the Main Menu, Please wait...");
@@ -152,21 +166,21 @@ public class Main {
                         * Displays a list of all the books in the collection at the moment
                         * loops through library collection and returns each book to be printed
                         */
-                       System.out.println("Book List");
+                       System.out.println("Current books available in the library.");
                        for (Book book1 : library.getBooks()) {
-                           System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor());
+                           System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor() + " " + book1.getGenre());
                        }
                        break;
 
                    case 5:
                        /*
                         * Option 5
-                        * Displays all books that were checked-out from the library.
+                        * Displays all books that are currently checked-out from the library.
                         * loops through borrowed collection and returns each book to be printed
                         */
-                       System.out.println("Checked-out books:");
+                       System.out.println("Books currently checked-out:");
                        for (Book book : library.getCheckedOut()) {
-                           System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor());
+                           System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
                        }
                        break;
 
@@ -221,10 +235,6 @@ public class Main {
                         * Used an iterator as the error ConcurrentModificationException
                         * kept occurring.
                         */
-                       int returnedBarcode;
-                       boolean found = false;
-                       boolean anotherIn = true;
-                       String option;
 
                        System.out.println("Check-In Menu:");
                        System.out.println("1. Check-In by title");
