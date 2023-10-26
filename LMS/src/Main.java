@@ -22,7 +22,12 @@ public class Main {
      */
 public static void main(String[] args) {
 
+            //MainFrame MainFrame = new MainFrame();
+
+
            Scanner scanner = new Scanner(System.in);
+
+
 
            ArrayList <Book> collection = new ArrayList<>();
            ArrayList <Book> checkedOut = new ArrayList<>();
@@ -46,6 +51,10 @@ public static void main(String[] args) {
            ViaTitle viaTitle = new ViaTitle(library, fileWriter, removeWrite, outWrite);
            ViaBarcode viaBarcode = new ViaBarcode(library, fileWriter,removeWrite, outWrite);
 
+           User user1 = new User("Patron", "Patron",100);
+           User user2 = new StaffMember("Staff", "Staff", 500);
+           //System.out.println(user1.toString());
+           //System.out.println(user2.toString());
 
            fileReader.readPrintFile();
            borrowedReader.readCheckedOut();
@@ -60,7 +69,9 @@ public static void main(String[] args) {
                System.out.println("5. Display books currently checked-out");
                System.out.println("6. Remove a book from the collection");
                System.out.println("7. Check in a book");
-               System.out.println("8. Upload a text file");
+               if(user2.isStaff()) {
+                   System.out.println("8. Upload a text file");
+               }
                System.out.println("9. Exit");
                System.out.println("Enter Your Choice: ");
 
@@ -253,13 +264,17 @@ public static void main(String[] args) {
                         * Provides the user with the ability to upload their
                         * own text file.
                         */
-                       scanner.nextLine();
-                       System.out.println("Name of text file. ex. Textfile.txt :");
-                       String yourBooks = scanner.nextLine();
+                       if(user1 instanceof StaffMember) {
+                           scanner.nextLine();
+                           System.out.println("Name of text file. ex. Textfile.txt :");
+                           String yourBooks = scanner.nextLine();
 
-                       FileReader uploadTextFile = new FileReader(yourBooks, collection, library, idList, generator);
-                       System.out.println("Upload taking place, please wait...");
-                       uploadTextFile.readYourText();
+                           FileReader uploadTextFile = new FileReader(yourBooks, collection, library, idList, generator);
+                           System.out.println("Upload taking place, please wait...");
+                           uploadTextFile.readYourText();
+                       } else {
+                           System.out.println("You don't have access to do that. Please try again.");
+                       }
                        break;
 
                    case 9:

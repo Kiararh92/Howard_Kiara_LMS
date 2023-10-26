@@ -3,29 +3,40 @@ public class User {
     String lastName;
     String userName;
     String email;
+    String role;
     long userID;
+    boolean isActive;
 
-    public User(String firstName, String lastName,long userID){
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String userName, String role, long userID){
+        this.userName = userName;
+        this.role = role;
         this.userID = userID;
+        this.isActive = true;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getRole() {
+        return role;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setRole(String role) {
+        this.role = role;
     }
+
+//    public String getLastName() {
+//        return lastName;
+//    }
+
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
 
     public long getUserID() {
         return userID;
@@ -35,4 +46,22 @@ public class User {
         this.userID = userID;
     }
 
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "userName = " + userName + " " +
+//                ", role = " + role + " " +
+//                ", userID = " + userID + " " +
+//                ", isActive + " + isActive +
+//    '}';
+//    }
+
+    public boolean isStaff(){
+        if(role.equals("Staff")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
