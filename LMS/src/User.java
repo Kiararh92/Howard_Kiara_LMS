@@ -56,12 +56,12 @@ public class User {
 //    '}';
 //    }
 
-    public boolean isStaff(){
-        if(role.equals("Staff")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean roleCheck(){
+//        if(role.equals("Staff")) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 }
 

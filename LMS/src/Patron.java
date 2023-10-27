@@ -3,4 +3,12 @@ public class Patron extends User{
         super(userName, role, userID);
     }
 
+    public boolean isPatron(){
+        if(role.equals("Staff")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
