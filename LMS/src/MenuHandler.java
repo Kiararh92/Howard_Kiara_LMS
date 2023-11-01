@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.*;
@@ -5,72 +6,104 @@ import java.io.*;
 
 public class MenuHandler {
 
+    private Library library;
+    private Barcode generator;
+    private ArrayList<Book> collection;
+    private ArrayList<Integer> idList;
+    private ArrayList <Book> checkedOut;
+    private ArrayList <Book> removedBooks;
 
-    public static void showMenu(){
+     FileReader fileReader;
+    private FileReader borrowedReader;
+    FileReader removedReader;
+
+    FWriter fileWriter;
+    FWriter outWrite;
+    FWriter removeWrite;
+
+    ViaTitle viaTitle;
+    ViaBarcode viaBarcode;
+
+    Patron user1;
+    StaffMember user2;
+    int choice;
+
+    public MenuHandler(Library library, Barcode generator, ArrayList<Book> collection, ArrayList<Integer> idList, ArrayList <Book> checkedOut,ArrayList <Book> removedBooks,FileReader fileReader,
+                       FileReader borrowedReader,FileReader removedReader,FWriter fileWriter,FWriter outWrite,FWriter removeWrite,ViaTitle viaTitle,
+                       ViaBarcode viaBarcode,Patron user1,StaffMember user2) {
+        this.library = library;
+        this.generator = generator;
+        this.collection = collection;
+        this.idList = idList;
+        this.checkedOut = checkedOut;
+        this.removedReader =removedReader;
+        this.fileReader = fileReader;
+        this.borrowedReader =borrowedReader;
+        this.removedBooks = removedBooks;
+        this.fileWriter = fileWriter;
+        this.outWrite=outWrite;
+        this.removeWrite=removeWrite;
+        this.viaTitle = viaTitle;
+        this.viaBarcode=viaBarcode;
+        this.user1=user1;
+        this.user2=user2;
+    }
+
+
+    public void showMenu(int choice, User currentUser){
         Scanner scanner = new Scanner(System.in);
 
-
-
-        ArrayList<Book> collection = new ArrayList<>();
-        ArrayList <Book> checkedOut = new ArrayList<>();
-        ArrayList <Book> removedBooks = new ArrayList<>();
-
-        ArrayList<Integer> idList = new ArrayList<>();
-
-        Library library = new Library(collection, checkedOut, removedBooks);
-        Barcode generator = new Barcode(idList);
-
-        int choice;
-
-        FileReader fileReader = new FileReader("Books.txt", collection, library, idList, generator);
-        FileReader borrowedReader = new FileReader("CheckedOut.txt",checkedOut, library, idList, generator);
-        FileReader removedReader = new FileReader("RemovedBooks.txt", removedBooks, library,idList, generator);
-
-        FWriter fileWriter = new FWriter("Books.txt", collection, library);
-        FWriter outWrite = new FWriter("CheckedOut.txt", checkedOut, library);
-        FWriter removeWrite = new FWriter("RemovedBooks.txt", removedBooks, library);
-
-        ViaTitle viaTitle = new ViaTitle(library, fileWriter, removeWrite, outWrite);
-        ViaBarcode viaBarcode = new ViaBarcode(library, fileWriter,removeWrite, outWrite);
-
-        Patron user1 = new Patron("Patron", "Patron",100);
-        StaffMember user2 = new StaffMember("Staff", "Staff", 500);
-
         fileReader.readPrintFile();
+
         borrowedReader.readCheckedOut();
 
-        System.out.println("1. Patron or 2. Staff Member: ");
-        int userChoice = scanner.nextInt();
-        scanner.nextLine();
-        User currentUser;
+        TableModel tableModel = new TableModel(collection, library);
+        JTable table1 = new JTable(tableModel);
 
-        if(userChoice == 1) {
-            currentUser = user1;
-        } else if (userChoice == 2) {
-            currentUser = user2;
-        } else {
-            System.out.println("Invalid user choice.");
-            return;
+
+
+        if(choice == 0) {
+
+            System.out.println("1. Patron or 2. Staff Member: ");
+            int userChoice = scanner.nextInt();
+            scanner.nextLine();
+            //User currentUser;
+
+            if (userChoice == 1) {
+                currentUser = user1;
+            } else if (userChoice == 2) {
+                currentUser = user2;
+            } else {
+                System.out.println("Invalid user choice.");
+                return;
+            }
         }
+
+
 
         while(true) {
 
             System.out.println("Menu");
             System.out.println("Enter Your Choice: ");
-            System.out.println("3. Check-out a book");
-            System.out.println("7. Check in a book");
-            System.out.println("9. Exit");
 
-            if(currentUser instanceof StaffMember) {
+        if(choice == 0) {
+            if (currentUser instanceof StaffMember) {
                 System.out.println("1. Update text files");
                 System.out.println("2. Add a book to the collection");
+                System.out.println("3. Check-out a book");
                 System.out.println("4. Display the library collection");
                 System.out.println("5. Display books currently checked-out");
                 System.out.println("6. Remove a book from the collection");
+                System.out.println("7. Check in a book");
                 System.out.println("8. Upload a text file");
+                System.out.println("9. Exit");
+            } else {
+                System.out.println("3. Check-out a book");
+                System.out.println("7. Check in a book");
+                System.out.println("9. Exit");
             }
             choice = scanner.nextInt();
-
+        }
             switch (choice) {
 
                 case 1:
@@ -263,8 +296,8 @@ public class MenuHandler {
                      * Provides the user with the ability to upload their
                      * own text file.
                      */
-                    if(user2 instanceof StaffMember) {
-                        scanner.nextLine();
+                    if(currentUser instanceof StaffMember) {
+                        //scanner.nextLine();
                         System.out.println("Name of text file. ex. Textfile.txt :");
                         String yourBooks = scanner.nextLine();
 
@@ -282,7 +315,13 @@ public class MenuHandler {
                     System.out.println("Goodbye!");
                     System.exit(0);
             }
-
         }
+
+
+//        public logIN() {
+//
+//        }
     }
+
 }
+

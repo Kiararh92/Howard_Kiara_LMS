@@ -4,7 +4,7 @@ public class Patron extends User{
     }
 
     public boolean isPatron(){
-        if(role.equals("Staff")) {
+        if(role.equals("Patron")) {
             return true;
         } else {
             return false;
