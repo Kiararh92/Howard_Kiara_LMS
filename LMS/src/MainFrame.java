@@ -14,9 +14,27 @@ public class MainFrame extends JFrame {
     private FileReader fileReader;
     private MenuHandler menuHandler;
 
-    public MainFrame(MenuHandler menuHandler, FileReader fileReader) {
+    private ArrayList<Book> collection;
+    private Library library;
+    private TableModel tableModel;
+
+    private Barcode generator;
+    private ArrayList<Integer> idList;
+    private FWriter fileWriter;
+    private FWriter outWrite;
+    private FWriter removeWrite;
+
+    public MainFrame(MenuHandler menuHandler,Library library, ArrayList<Book> collection, FileReader fileReader, TableModel tableModel,ArrayList<Integer> idList, Barcode generator,FWriter fileWriter,FWriter outWrite,FWriter removeWrite) {
         this.menuHandler = menuHandler;
         this.fileReader = fileReader;
+        this.library = library;
+        this.collection = collection;
+        this.tableModel = tableModel;
+        this.idList = idList;
+        this.generator = generator;
+        this.fileWriter = fileWriter;
+        this.outWrite=outWrite;
+        this.removeWrite=removeWrite;
 
         setContentPane(mainPanel);
         setTitle("LMS");
@@ -39,7 +57,7 @@ public class MainFrame extends JFrame {
 //                MenuGui menuGui = new MenuGui(currentUser, menuHandler);
 //                menuGui.setVisible(true);
 
-                MainWindow mainWindow = new MainWindow(menuHandler, fileReader, currentUser);
+                MainWindow mainWindow = new MainWindow(menuHandler, fileReader, currentUser, library, collection, tableModel, idList, generator,fileWriter,outWrite,removeWrite);
                 mainWindow.setVisible(true);
 
 
@@ -55,7 +73,7 @@ public class MainFrame extends JFrame {
 
                 User currentUser = new StaffMember("Staff", "Staff", 501);
 
-                MainWindow mainWindow = new MainWindow(menuHandler, fileReader, currentUser);
+                MainWindow mainWindow = new MainWindow(menuHandler, fileReader, currentUser, library, collection, tableModel,idList, generator,fileWriter,outWrite,removeWrite);
                 mainWindow.setVisible(true);
 
             }

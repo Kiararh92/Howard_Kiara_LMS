@@ -27,6 +27,7 @@ public class MenuHandler {
     Patron user1;
     StaffMember user2;
     int choice;
+    String guiFilePath;
 
     public MenuHandler(Library library, Barcode generator, ArrayList<Book> collection, ArrayList<Integer> idList, ArrayList <Book> checkedOut,ArrayList <Book> removedBooks,FileReader fileReader,
                        FileReader borrowedReader,FileReader removedReader,FWriter fileWriter,FWriter outWrite,FWriter removeWrite,ViaTitle viaTitle,
@@ -50,17 +51,17 @@ public class MenuHandler {
     }
 
 
-    public void showMenu(int choice, User currentUser){
+    public void showMenu(int choice, User currentUser, String guiFilePath){
+        this.choice = choice;
+        //this.currentUser = currentUser;
+        this.guiFilePath = guiFilePath;
+
         Scanner scanner = new Scanner(System.in);
 
-        fileReader.readPrintFile();
+//        TableModel tableModel = new TableModel(collection, library);
+//        JTable table1 = new JTable(tableModel);
 
-        borrowedReader.readCheckedOut();
-
-        TableModel tableModel = new TableModel(collection, library);
-        JTable table1 = new JTable(tableModel);
-
-
+        boolean isGUIEntry = false; //Initialize the flag for GUI entry.
 
         if(choice == 0) {
 
@@ -82,238 +83,267 @@ public class MenuHandler {
 
 
         while(true) {
+            if(!isGUIEntry) {
 
-            System.out.println("Menu");
-            System.out.println("Enter Your Choice: ");
+                System.out.println("Menu");
+                System.out.println("Enter Your Choice: ");
 
-        if(choice == 0) {
-            if (currentUser instanceof StaffMember) {
-                System.out.println("1. Update text files");
-                System.out.println("2. Add a book to the collection");
-                System.out.println("3. Check-out a book");
-                System.out.println("4. Display the library collection");
-                System.out.println("5. Display books currently checked-out");
-                System.out.println("6. Remove a book from the collection");
-                System.out.println("7. Check in a book");
-                System.out.println("8. Upload a text file");
-                System.out.println("9. Exit");
-            } else {
-                System.out.println("3. Check-out a book");
-                System.out.println("7. Check in a book");
-                System.out.println("9. Exit");
-            }
-            choice = scanner.nextInt();
-        }
-            switch (choice) {
+                if(choice == 0) {
+                if (currentUser instanceof StaffMember) {
+                    System.out.println("1. Update text files");
+                    System.out.println("2. Add a book to the collection");
+                    System.out.println("3. Check-out a book");
+                    System.out.println("4. Display the library collection");
+                    System.out.println("5. Display books currently checked-out");
+                    System.out.println("6. Remove a book from the collection");
+                    System.out.println("7. Check in a book");
+                    System.out.println("8. Upload a text file");
+                    System.out.println("9. Exit");
+                } else {
+                    System.out.println("3. Check-out a book");
+                    System.out.println("7. Check in a book");
+                    System.out.println("9. Exit");
+                }
+                choice = scanner.nextInt();
 
-                case 1:
-                    /*
-                     * Option 1
-                     * Updates text file with current collection of books.
-                     * calls the writeToFile method to write collection
-                     * of books to a text file.
-                     */
-                    if(currentUser instanceof StaffMember) {
-                        fileWriter.writeToFile();
-                        outWrite.writeCheckedOut();
-                        removeWrite.writeRemoved();
-                        System.out.println("Your text files has been updated.");
-                    } else {
-                        System.out.print("Invalid option. \n");
-                    }
-                    break;
+//                if (choice == 0) {
+//                    isGUIEntry = true; // Set the flag to true for subsequent iterations
+//                    continue; // Skip the switch statement and go back to the loop start
+//                }
+            }else {
+                }
+                switch (choice) {
 
-                case 2:
-                    /*
-                     * Option 2
-                     * Adds a new book to the collection.
-                     * Input and scans given barcode, title, and author of book.
-                     *
-                     * Creates a book instance of new information
-                     * Adds book to the library collection
-                     * Ability to add another book or exit to main menu.
-                     */
-
-                    System.out.println("Add a new book to the collection.");
-                    boolean anotherAdd;
-                    while (true) {
-                        scanner.nextLine();
-                        System.out.println("barcode:");
-                        String id = scanner.nextLine();
-                        int id1 = Integer.parseInt(id);
-                        generator.textbarCode(id1);
-                        int barCode = generator.getCurrentbarCode();
-                        System.out.println("title: ");
-                        String title = scanner.nextLine();
-                        System.out.println("author: ");
-                        String author = scanner.nextLine();
-                        System.out.println("genre: ");
-                        String genre = scanner.nextLine();
-
-                        Book book = new Book(barCode, title, author, genre);
-                        library.addBook(book);
-
-                        System.out.println("Would you like to add another book? Yes or No?");
-                        String option = scanner.nextLine();
-                        if (option.equalsIgnoreCase("Yes")) {
-                            anotherAdd = true;
+                    case 1:
+                        /*
+                         * Option 1
+                         * Updates text file with current collection of books.
+                         * calls the writeToFile method to write collection
+                         * of books to a text file.
+                         */
+                        if (currentUser instanceof StaffMember) {
+                            fileWriter.writeToFile();
+                            outWrite.writeCheckedOut();
+                            removeWrite.writeRemoved();
+                            System.out.println("Your text files has been updated.");
                         } else {
-                            anotherAdd = false;
-                            break;
+                            System.out.print("Invalid option. \n");
                         }
-                    }
-                    break;
+                        break;
 
-                case 3:
-                    /*
-                     * Option 3
-                     * Check out a book from the collection via Barcode # or title
-                     * compares entered barcode or title to the one in the collection
-                     * If there's a match in the collection, the check-out process for book
-                     * begins and adds it to a borrowed collection.
-                     * Displays if book was successfully checked-out with its information.
-                     *
-                     * Used an iterator as the error ConcurrentModificationException
-                     * kept occurring.
-                     */
+                    case 2:
+                        /*
+                         * Option 2
+                         * Adds a new book to the collection.
+                         * Input and scans given barcode, title, and author of book.
+                         *
+                         * Creates a book instance of new information
+                         * Adds book to the library collection
+                         * Ability to add another book or exit to main menu.
+                         */
 
-                    System.out.println("Check-out Menu:");
-                    System.out.println("1. Check-out by title");
-                    System.out.println("2. Check-out by barcode");
-                    System.out.println("3. Return to Main Menu");
-                    System.out.println("Choose a option: ");
-                    int checkedoutMenu = scanner.nextInt();
-                    scanner.nextLine();
+                        System.out.println("Add a new book to the collection.");
+                        boolean anotherAdd;
+                        while (true) {
+                            scanner.nextLine();
+                            System.out.println("barcode:");
+                            String id = scanner.nextLine();
+                            int id1 = Integer.parseInt(id);
+                            generator.textbarCode(id1);
+                            int barCode = generator.getCurrentbarCode();
+                            System.out.println("title: ");
+                            String title = scanner.nextLine();
+                            System.out.println("author: ");
+                            String author = scanner.nextLine();
+                            System.out.println("genre: ");
+                            String genre = scanner.nextLine();
 
-                    switch (checkedoutMenu) {
-                        case 1:
-                            //select a book via title
-                            viaTitle.borrowedViaTitle();
-                            break;
-                        case 2:
-                            //select a book via Barcode
-                            viaBarcode.checkedoutViaBarcode();
-                            break;
-                        case 3:
-                            System.out.println("Returning to the Main Menu, Please wait...");
-                            break;
-                        default:
-                            System.out.println("Invalid option");
-                            break;
-                    }
-                    break;
+                            Book book = new Book(barCode, title, author, genre);
+                            library.addBook(book);
 
-                case 4:
-                    /*
-                     * Option 4
-                     * Displays a list of all the books in the collection at the moment
-                     * loops through library collection and returns each book to be printed
-                     */
-                    System.out.println("Current books available in the library.");
-                    for (Book book1 : library.getBooks()) {
-                        System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor() + " " + book1.getGenre());
-                    }
-                    break;
+                            System.out.println("Would you like to add another book? Yes or No?");
+                            String option = scanner.nextLine();
+                            if (option.equalsIgnoreCase("Yes")) {
+                                anotherAdd = true;
+                            } else {
+                                anotherAdd = false;
+                                break;
+                            }
+                        }
+                        break;
 
-                case 5:
-                    /*
-                     * Option 5
-                     * Displays all books that are currently checked-out from the library.
-                     * loops through borrowed collection and returns each book to be printed
-                     */
-                    System.out.println("Books currently checked-out:");
-                    for (Book book : library.getCheckedOut()) {
-                        System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
-                    }
-                    break;
+                    case 3:
+                        /*
+                         * Option 3
+                         * Check out a book from the collection via Barcode # or title
+                         * compares entered barcode or title to the one in the collection
+                         * If there's a match in the collection, the check-out process for book
+                         * begins and adds it to a borrowed collection.
+                         * Displays if book was successfully checked-out with its information.
+                         *
+                         * Used an iterator as the error ConcurrentModificationException
+                         * kept occurring.
+                         */
 
-                case 6:
-                    /*
-                     *  Option 6
-                     *  Remove/delete a book from the collection.
-                     *  Removal submenu: different options
-                     *           to search for a book.
-                     */
-                    System.out.println("Removal Menu:");
-                    System.out.println("1. Remove by title");
-                    System.out.println("2. Remove by barcode");
-                    System.out.println("3. Return to Main Menu");
-                    System.out.println("Choose a option: ");
-                    int removalMenu = scanner.nextInt();
+                        System.out.println("Check-out Menu:");
+                        System.out.println("1. Check-out by title");
+                        System.out.println("2. Check-out by barcode");
+                        System.out.println("3. Return to Main Menu");
+                        System.out.println("Choose a option: ");
+                        int checkedoutMenu = scanner.nextInt();
+                        scanner.nextLine();
 
-                    switch (removalMenu) {
-                        case 1:
-                            //via title
-                            viaTitle.removalViaTitle();
-                            break;
-                        case 2:
-                            //via barcode
-                            viaBarcode.removalViaBarcode();
-                            break;
-                        case 3:
-                            System.out.println("Returning to the Main Menu, Please wait...");
-                            break;
-                        default:
-                            System.out.println("Invalid option");
-                            break;
-                    }
-                    break;
+                        switch (checkedoutMenu) {
+                            case 1:
+                                //select a book via title
+                                //viaTitle.borrowedViaTitle();
+                                break;
+                            case 2:
+                                //select a book via Barcode
+                                viaBarcode.checkedoutViaBarcode();
+                                break;
+                            case 3:
+                                System.out.println("Returning to the Main Menu, Please wait...");
+                                break;
+                            default:
+                                System.out.println("Invalid option");
+                                break;
+                        }
+                        break;
 
-                case 7:
-                    /*
-                     * Option 7
-                     * Submenu for returning a borrowed book.
-                     */
+                    case 4:
+                        /*
+                         * Option 4
+                         * Displays a list of all the books in the collection at the moment
+                         * loops through library collection and returns each book to be printed
+                         */
+                        System.out.println("Current books available in the library.");
+                        for (Book book1 : library.getBooks()) {
+                            System.out.println(book1.getbarCode() + " " + book1.getTitle() + " " + book1.getAuthor() + " " + book1.getGenre());
+                        }
+                        break;
 
-                    System.out.println("Check-In Menu:");
-                    System.out.println("1. Check-In by title");
-                    System.out.println("2. Check-In by barcode");
-                    System.out.println("3. Return to Main Menu");
-                    System.out.println("Choose a option: ");
-                    int returnMenu = scanner.nextInt();
+                    case 5:
+                        /*
+                         * Option 5
+                         * Displays all books that are currently checked-out from the library.
+                         * loops through borrowed collection and returns each book to be printed
+                         */
+                        System.out.println("Books currently checked-out:");
+                        for (Book book : library.getCheckedOut()) {
+                            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+                        }
+                        break;
 
-                    switch (returnMenu) {
-                        case 1:
-                            //via title
-                            viaTitle.returnViaTitle();
-                            break;
-                        case 2:
-                            //via barcode
-                            viaBarcode.returnViaBarcode();
-                            break;
-                        case 3:
-                            System.out.println("Returning to the Main Menu, Please wait...");
-                            break;
-                        default:
-                            System.out.println("Invalid option");
-                            break;
-                    }
-                    break;
+                    case 6:
+                        /*
+                         *  Option 6
+                         *  Remove/delete a book from the collection.
+                         *  Removal submenu: different options
+                         *           to search for a book.
+                         */
+                        System.out.println("Removal Menu:");
+                        System.out.println("1. Remove by title");
+                        System.out.println("2. Remove by barcode");
+                        System.out.println("3. Return to Main Menu");
+                        System.out.println("Choose a option: ");
+                        int removalMenu = scanner.nextInt();
 
-                case 8:
-                    /*
-                     * Option 8
-                     * Provides the user with the ability to upload their
-                     * own text file.
-                     */
-                    if(currentUser instanceof StaffMember) {
-                        //scanner.nextLine();
-                        System.out.println("Name of text file. ex. Textfile.txt :");
-                        String yourBooks = scanner.nextLine();
+                        switch (removalMenu) {
+                            case 1:
+                                //via title
+                                viaTitle.removalViaTitle();
+                                break;
+                            case 2:
+                                //via barcode
+                                viaBarcode.removalViaBarcode();
+                                break;
+                            case 3:
+                                System.out.println("Returning to the Main Menu, Please wait...");
+                                break;
+                            default:
+                                System.out.println("Invalid option");
+                                break;
+                        }
+                        break;
 
-                        FileReader uploadTextFile = new FileReader(yourBooks, collection, library, idList, generator);
-                        System.out.println("Upload taking place, please wait...");
-                        uploadTextFile.readYourText();
-                    } else {
-                        System.out.println("You don't have access to do that. Please try again.");
-                    }
-                    break;
+                    case 7:
+                        /*
+                         * Option 7
+                         * Submenu for returning a borrowed book.
+                         */
 
-                case 9:
-                    //Option 9
-                    //Displays goodbye message and exits application
-                    System.out.println("Goodbye!");
-                    System.exit(0);
+                        System.out.println("Check-In Menu:");
+                        System.out.println("1. Check-In by title");
+                        System.out.println("2. Check-In by barcode");
+                        System.out.println("3. Return to Main Menu");
+                        System.out.println("Choose a option: ");
+                        int returnMenu = scanner.nextInt();
+
+                        switch (returnMenu) {
+                            case 1:
+                                //via title
+                                viaTitle.returnViaTitle();
+                                break;
+                            case 2:
+                                //via barcode
+                                viaBarcode.returnViaBarcode();
+                                break;
+                            case 3:
+                                System.out.println("Returning to the Main Menu, Please wait...");
+                                break;
+                            default:
+                                System.out.println("Invalid option");
+                                break;
+                        }
+                        break;
+
+                    case 8:
+                        /*
+                         * Option 8
+                         * Provides the user with the ability to upload their
+                         * own text file.
+                         */
+                        Scanner scanner1 = new Scanner(System.in);
+                        try {
+                            if (currentUser instanceof StaffMember) {
+                                String yourBooks;
+                                //scanner.nextLine();
+                                if (guiFilePath.isEmpty()) {
+                                    System.out.println("Name of text file. ex. Textfile.txt :");
+                                    yourBooks = scanner1.nextLine();
+                                } else {
+                                    yourBooks = guiFilePath;
+                                }
+
+                                FileReader uploadTextFile = new FileReader(yourBooks, collection, library, idList, generator);
+
+                                System.out.println("Upload taking place, please wait...");
+
+                                uploadTextFile.readYourText();
+                                scanner1.close();
+                                continue;
+                            } else {
+                                System.out.println("You don't have access to do that. Please try again.");
+                            }
+                        } finally {
+                            choice = 0;
+                            scanner1.close();
+                        }
+                        break;
+
+
+                    case 9:
+                        //Option 9
+                        //Displays goodbye message and exits application
+                        System.out.println("Goodbye!");
+                        System.exit(0);
+                        break;
+                }
+            }
+
+            if(choice == 0) {
+                isGUIEntry = true;
             }
         }
 

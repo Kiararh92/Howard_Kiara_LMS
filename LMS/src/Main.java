@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 import java.util.*;
 import java.io.*;
@@ -20,10 +22,6 @@ public class Main {
      *
      * Calls the varies reader and writer methods to edit text files.
      */
-    FileReader fileReader;
-    public Main(FileReader fileReader){
-        this.fileReader = fileReader;
-    }
 
 //    public FileReader(String filePath, ArrayList<Book> collection, Library library, ArrayList<Integer> idList, Barcode generator) {
 //        this.filePath = filePath;
@@ -47,6 +45,7 @@ public class Main {
         FileReader borrowedReader = new FileReader("CheckedOut.txt",checkedOut, library, idList, generator);
         FileReader removedReader = new FileReader("RemovedBooks.txt", removedBooks, library,idList, generator);
 
+
         FWriter fileWriter = new FWriter("Books.txt", collection, library);
         FWriter outWrite = new FWriter("CheckedOut.txt", checkedOut, library);
         FWriter removeWrite = new FWriter("RemovedBooks.txt", removedBooks, library);
@@ -57,15 +56,33 @@ public class Main {
         Patron user1 = new Patron("Patron", "Patron",100);
         StaffMember user2 = new StaffMember("Staff", "Staff", 500);
 
+        fileReader.readPrintFile();
+        borrowedReader.readCheckedOut();
+
         MenuHandler menuHandler = new MenuHandler(library, generator ,collection, idList, checkedOut, removedBooks, fileReader,borrowedReader,
                                                     removedReader,fileWriter,outWrite,removeWrite, viaTitle, viaBarcode, user1, user2);
 
+//        fileReader.readPrintFile();
+//        borrowedReader.readCheckedOut();
 
-            MainFrame mainFrame = new MainFrame(menuHandler, fileReader);
+        //TableModel tableModel = new TableModel(collection, library);
+
+        TableModel tableModel = new TableModel(collection, library);
+        JTable table1 = new JTable(tableModel);
+
+//        int testchoice = 0;
+//        User testUser = null;
+//        String testFilePath = "";
+//
+//        menuHandler.showMenu(testchoice, testUser, testFilePath);
+
+        try {
+            MainFrame mainFrame = new MainFrame(menuHandler,library, collection, fileReader, tableModel, idList, generator, fileWriter,outWrite,removeWrite);
             mainFrame.setVisible(true);
-
-
-
+        } catch (Exception e) {
+            System.out.println("An error has occurred. You will be returned to the Main Menu to try again.");
+            e.printStackTrace();
+        }
 
     }
 }

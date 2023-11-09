@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -88,16 +89,17 @@ public class ViaTitle {
      * Used an iterator as the error ConcurrentModificationException
      * kept occurring.
      */
-    public void borrowedViaTitle() {
+    public void borrowedViaTitle(JLabel statusLabel, JTextField fieldCheckOut, JTextArea libraryTextArea) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("Please provide the title of the book you would like to check out: ");
-            borrowedTitle = scanner.nextLine();
+            borrowedTitle = fieldCheckOut.getText(); //GUI get text instead of scanner to console.
             Iterator<Book> iterator = library.getBooks().iterator();
             while (iterator.hasNext()) {
                 Book book = iterator.next();
-                if (Objects.equals(book.getTitle(), borrowedTitle)) {
+                //borrowedTitle.equalsIgnoreCase(book.getTitle());
+                if (borrowedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("Available")) {
                     int outBarcode = book.getbarCode();
                     library.updateStatus(outBarcode, "Checked-Out");
                     LocalDate dueDate = LocalDate.now().plusDays(14);
@@ -105,22 +107,34 @@ public class ViaTitle {
                     iterator.remove();
                     library.addBorrowed(book);
                     askedOut = true;
+                    statusLabel.setText("Book successfully checked out.");
                 } else {
                     askedOut = false;
+                    statusLabel.setText("Book not found or not available for checkout.");
                 }
             }
             break;
         }
-        System.out.println("Book successfully checked out.");
+        //GUI status
+//        if(askedOut) {
+//            statusLabel.setText("Book successfully checked out.");
+//        } else {
+//            statusLabel.setText("Book not found or not available for checkout.");
+//        }
+
+        // Maybe just for Staff
         for(Book book : library.getCheckedOut()) {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
             System.out.println(book.getbarCode() + "," + book.getTitle() + "," + book.getGenre() + " by " + book.getAuthor() + " due on " + book.getdueDate());
         }
+
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
+        //Display to GUI Text area instead of console.
+        libraryTextArea.setText("");
         for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+            libraryTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
         }
     }
     /*
