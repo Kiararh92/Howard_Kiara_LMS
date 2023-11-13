@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.io.*;
@@ -46,37 +47,44 @@ public class ViaBarcode {
      * Used an iterator as the error ConcurrentModificationException
      * kept occurring.
      */
-    public void removalViaBarcode(){
+    public void removalViaBarcode(JLabel statusReBcLabel, JTextField fieldReBc, JTextArea libraryReBcTextArea){
 
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("What is the barcode of the book you would like to delete: ");
-            removedBarcode = scanner.nextInt();
-            Iterator<Book> iterator = library.getBooks().iterator();
-            while (iterator.hasNext()) {
-                Book book = iterator.next();
-                if (book.getbarCode() == removedBarcode) {
-                    library.updateStatus(removedBarcode, "Removed");
-                    iterator.remove();
-                    library.addRemoved(book);
-                    askedRemoved = true;
-                } else {
-                    askedRemoved = false;
+            if(!fieldReBc.getText().isEmpty()) {
+                removedBarcode = Integer.parseInt(fieldReBc.getText());
+                Iterator<Book> iterator = library.getBooks().iterator();
+                while (iterator.hasNext()) {
+                    Book book = iterator.next();
+                    if (book.getbarCode() == removedBarcode && book.getStatus().equals("Available")) {
+                        library.updateStatus(removedBarcode, "Removed");
+                        iterator.remove();
+                        library.addRemoved(book);
+                        askedRemoved = true;
+                    } else {
+                        statusReBcLabel.setText("Barcode not found.");
+                        askedRemoved = false;
+                    }
                 }
+            } else {
+                statusReBcLabel.setText("Barcode cannot be empty.");
             }
             break;
         }
         for (Book book : library.getRemoved()) {
             fileWriter.writeToFile();
             removeWrite.writeRemoved();
-            System.out.println("Book successfully deleted.");
+            statusReBcLabel.setText("Book successfully deleted.");
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
         System.out.println("Book Deletion Finished. \n");
         System.out.println("Here is the current library collection after deletion.");
-        for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+        libraryReBcTextArea.setText("");
+        for(Book book : library.getRemoved()) {
+            libraryReBcTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
+            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
         }
     }
 
@@ -123,6 +131,7 @@ public class ViaBarcode {
         }
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
+
         for(Book book : library.getBooks()) {
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }

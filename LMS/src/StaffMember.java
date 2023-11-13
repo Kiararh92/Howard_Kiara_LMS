@@ -15,6 +15,4 @@ public class StaffMember extends User{
 
         }
     }
-
-
 }

@@ -24,13 +24,18 @@ public class Book{
      * @param status The current status of the book.
      * @param genre The genre of the book.
      */
-    public Book(int barCode, String title, String author, String genre) {
+    public Book(int barCode, String title, String author, String genre,String status,LocalDate dueDate) {
         this.barCode = barCode;
         this.title = title;
         this.author = author;
-        this.status = "Available";
         this.genre = genre;
-        this.dueDate = null;
+        this.dueDate = dueDate;
+
+        if(status == null || status.isEmpty()) {
+            this.status = "Available";
+        } else {
+            this.status = status;
+        }
     }
     /*
      * Receives the Barcode of the book

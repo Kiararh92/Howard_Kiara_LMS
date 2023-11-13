@@ -21,7 +21,8 @@ public class FWriter {
     public void writeToFile() {
         try(FileWriter myWriter = new FileWriter(fileUpdate)) {
             for (Book book : library.getBooks()) {
-                String line = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
+                //String line = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
+                String line = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre() + "," + book.getStatus() + ","  + book.getdueDate();
                 myWriter.write(line + "\n");
             }
         } catch (IOException e) {
@@ -33,7 +34,8 @@ public class FWriter {
     public void writeCheckedOut() {
         try(FileWriter outWrite = new FileWriter(fileUpdate)) {
             for (Book book : library.getCheckedOut()) {
-                String line1 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
+                //String line1 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
+                String line1 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre() + "," + book.getStatus() + ","  + book.getdueDate();
                 outWrite.write(line1 + "\n");
             }
         } catch (IOException e) {
@@ -45,7 +47,8 @@ public class FWriter {
     public void writeRemoved() {
         try (FileWriter removeWrite = new FileWriter(fileUpdate)) {
             for (Book book : library.getRemoved()) {
-                String line2 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
+                //String line2 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre();
+                String line2 = book.getbarCode() + "," + book.getTitle() + "," + book.getAuthor() + "," + book.getGenre() + "," + book.getStatus() + ","  + book.getdueDate();
                 removeWrite.write(line2 + "\n");
             }
         } catch (IOException e) {

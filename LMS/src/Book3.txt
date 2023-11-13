@@ -1,0 +1,20 @@
+1,To Kill a Mockingbird,Harper Lee,Fiction
+2,1984,George Orwell,Fiction
+3,The Great Gatsby,F. Scott Fitzgerald,Fiction
+4,Pride and Prejudice,Jane Austen,Romance
+5,The Handmaid's Tale,Maragret Atwood,dystopia fiction
+6,The Color Purple,Alice Walker,novel
+7,The Lord of the Rings, J.R.R. Tolkien,Fantasy
+8,Six of Crows,Leigh Bardugo,Fantasy
+9,A Game of Thrones,George R.R. Martin,Fantasy
+10,Harry Potter and the Half-Blooded Prince,J K Rowling,Fantasy
+11,Shadow and Bone,Leigh Bardugo,Fantasy
+12,Rules For A Knight,Ethan Hawke,Horror
+13,The Shining,Stephen King,Horror
+14,Murder On The Orient Express,Agatha Christie,Mystery
+15,Deadly Class Volume 1,Rick Remender,Action-Comic
+16,Saga: Compendium,Brain K. Vaughan,Space/Fantasy
+17,The Walking Dead,Robert Kirkman,Post-apocalyptic
+18,And Then There Were None, Agatha Christie,Mystery
+19,Death Note,Tsugumi Ohba,Fiction-Manga
+20,Attack on Titan,Hajime Isayama,Fantasy-Manga

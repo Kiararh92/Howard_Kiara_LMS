@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.*;
 import java.util.ArrayList;
 
 public class TableModel extends AbstractTableModel {
@@ -47,5 +49,10 @@ public class TableModel extends AbstractTableModel {
         }
     }
 
+    public void refreshTable(ArrayList<Book> collection){
+        this.collection = collection;
+        //Refresh the view
+        fireTableDataChanged();
+    }
 
 }

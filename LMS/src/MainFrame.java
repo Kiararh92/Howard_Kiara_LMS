@@ -67,8 +67,8 @@ public class MainFrame extends JFrame {
         staffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tfTextUpload.setText("");
-                tfLastName.setText("");
+                //tfTextUpload.setText("");
+                //tfLastName.setText("");
                 lbWelcome.setText("");
 
                 User currentUser = new StaffMember("Staff", "Staff", 501);

@@ -30,14 +30,6 @@ public class User {
         this.role = role;
     }
 
-//    public String getLastName() {
-//        return lastName;
-//    }
-
-//    public void setLastName(String lastName) {
-//        this.lastName = lastName;
-//    }
-
     public long getUserID() {
         return userID;
     }
@@ -46,22 +38,5 @@ public class User {
         this.userID = userID;
     }
 
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "userName = " + userName + " " +
-//                ", role = " + role + " " +
-//                ", userID = " + userID + " " +
-//                ", isActive + " + isActive +
-//    '}';
-//    }
-
-//    public boolean roleCheck(){
-//        if(role.equals("Staff")) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }
 

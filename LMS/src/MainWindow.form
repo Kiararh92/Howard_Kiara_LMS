@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="712" height="465"/>
+      <xy x="20" y="20" width="809" height="465"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -17,7 +17,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="fcb75" binding="RJPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="fcb75" binding="RJPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <splitpane position="left"/>
@@ -27,7 +27,7 @@
             <children>
               <component id="e46a9" class="javax.swing.JButton" binding="bnCheckOut">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="CHECK-OUT"/>
@@ -35,7 +35,7 @@
               </component>
               <component id="5d53f" class="javax.swing.JButton" binding="bnCheckIn">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="CHECK-IN"/>
@@ -43,7 +43,7 @@
               </component>
               <component id="f5945" class="javax.swing.JButton" binding="bnUpload">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Upload text file"/>
@@ -51,10 +51,18 @@
               </component>
               <component id="a3ec8" class="javax.swing.JButton" binding="bnCollection">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Display Collection"/>
+                </properties>
+              </component>
+              <component id="f657c" class="javax.swing.JButton" binding="bnRemove">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Remove"/>
                 </properties>
               </component>
             </children>
@@ -66,114 +74,173 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="6bdb6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="6bdb6" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <card name="checkInCard"/>
                 </constraints>
                 <properties>
-                  <background color="-1813736"/>
+                  <background color="-9378333"/>
                 </properties>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="2b077" class="javax.swing.JLabel" binding="ChckInTitleLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Enter the book title:"/>
+                    </properties>
+                  </component>
+                  <component id="659df" class="javax.swing.JTextArea" binding="libraryInTextArea">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="becce" class="javax.swing.JButton" binding="bnInProcess">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Check In"/>
+                    </properties>
+                  </component>
+                  <component id="618d8" class="javax.swing.JLabel" binding="statusChckInLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Status Label"/>
+                    </properties>
+                  </component>
+                  <component id="83e0f" class="javax.swing.JTextField" binding="fieldChckIn">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties>
+                      <toolTipText value="Book Title"/>
+                    </properties>
+                  </component>
+                </children>
               </grid>
-              <grid id="fcc7c" layout-manager="GridLayoutManager" row-count="7" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="fcc7c" layout-manager="GridLayoutManager" row-count="5" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <card name="checkOutCard"/>
                 </constraints>
                 <properties>
-                  <background color="-13680216"/>
+                  <background color="-9378333"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <vspacer id="5eac0">
-                    <constraints>
-                      <grid row="0" column="4" row-span="7" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </vspacer>
-                  <component id="3df85" class="javax.swing.JLabel" binding="checkoutTitleLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="3" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="&quot;Enter the title of the book to check out:&quot;"/>
-                    </properties>
-                  </component>
-                  <component id="9837" class="javax.swing.JTextField" binding="fieldCheckOut">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <component id="fe7f6" class="javax.swing.JLabel" binding="statusLabel">
                     <constraints>
-                      <grid row="3" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="statusLabel"/>
                     </properties>
                   </component>
-                  <component id="509e1" class="javax.swing.JTextArea" binding="libraryTextArea">
+                  <component id="9837" class="javax.swing.JTextField" binding="fieldCheckOut">
                     <constraints>
-                      <grid row="3" column="2" row-span="2" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <preferred-size width="100" height="50"/>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                     <properties/>
                   </component>
-                  <hspacer id="9b83b">
-                    <constraints>
-                      <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                  </hspacer>
                   <component id="a473d" class="javax.swing.JButton" binding="bnOutProcess">
                     <constraints>
-                      <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Check Out"/>
                     </properties>
                   </component>
-                  <component id="3a1ec" class="javax.swing.JButton" binding="bnFindBook">
+                  <component id="509e1" class="javax.swing.JTextArea" binding="libraryTextArea">
                     <constraints>
-                      <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="1" row-span="3" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="100" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <hspacer id="4fa3a">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                  <hspacer id="ff19d">
+                    <constraints>
+                      <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                  <component id="3df85" class="javax.swing.JLabel" binding="checkoutTitleLabel">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="8" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Search"/>
+                      <text value="&quot;Enter the title of the book to check out:&quot;"/>
                     </properties>
                   </component>
                 </children>
               </grid>
-              <grid id="8ccb9" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="8ccb9" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <card name="uploadCard"/>
                 </constraints>
                 <properties>
-                  <background color="-11414476"/>
+                  <background color="-9378333"/>
                 </properties>
                 <border type="none"/>
                 <children>
                   <component id="7c9c3" class="javax.swing.JLabel" binding="lbFilePath">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <alignmentX value="0.0"/>
-                      <text value="labelUpload"/>
+                      <text value="File Path"/>
                       <verticalTextPosition value="0"/>
+                    </properties>
+                  </component>
+                  <component id="c76f0" class="javax.swing.JLabel" binding="statusUpLabel">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Status Label"/>
                     </properties>
                   </component>
                   <component id="d23c8" class="javax.swing.JButton" binding="bnUploadFile">
                     <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Upload"/>
+                      <text value="Select File"/>
                     </properties>
+                  </component>
+                  <component id="50497" class="javax.swing.JButton" binding="bnSave">
+                    <constraints>
+                      <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Save"/>
+                    </properties>
+                  </component>
+                  <component id="1a38e" class="javax.swing.JTextArea" binding="libraryUpTextArea">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
                   </component>
                 </children>
               </grid>
@@ -183,7 +250,7 @@
                   <card name="collectionCard"/>
                 </constraints>
                 <properties>
-                  <background color="-5107300"/>
+                  <background color="-9378333"/>
                 </properties>
                 <border type="none"/>
                 <children>
@@ -210,6 +277,85 @@
                       </component>
                     </children>
                   </scrollpane>
+                </children>
+              </grid>
+              <grid id="80e5b" layout-manager="GridLayoutManager" row-count="3" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <card name="removeCard"/>
+                </constraints>
+                <properties>
+                  <background color="-9378333"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="c494" class="javax.swing.JLabel" binding="removeBcLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-16382458"/>
+                      <text value="Enter the book barcode:"/>
+                    </properties>
+                  </component>
+                  <component id="9f82d" class="javax.swing.JTextField" binding="fieldReT">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="113b" class="javax.swing.JLabel" binding="removeTLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-16382458"/>
+                      <text value="Enter the book title:"/>
+                    </properties>
+                  </component>
+                  <component id="d9741" class="javax.swing.JTextField" binding="fieldReBc">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="2fd9e" class="javax.swing.JButton" binding="bnReBcProcess">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="4" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Remove Via Barcode"/>
+                    </properties>
+                  </component>
+                  <component id="fec5" class="javax.swing.JTextArea" binding="libraryReBcTextArea">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="5" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="50"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="bd028" class="javax.swing.JLabel" binding="statusReBcLabel">
+                    <constraints>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-16382458"/>
+                      <text value="Status Label"/>
+                    </properties>
+                  </component>
+                  <component id="c1844" class="javax.swing.JButton" binding="bnReProcess">
+                    <constraints>
+                      <grid row="1" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Remove Via Title"/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
             </children>

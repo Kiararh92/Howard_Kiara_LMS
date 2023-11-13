@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.*;
@@ -158,7 +159,10 @@ public class MenuHandler {
                             System.out.println("genre: ");
                             String genre = scanner.nextLine();
 
-                            Book book = new Book(barCode, title, author, genre);
+                            String status = "Available";
+                            LocalDate dueDate = null;
+
+                            Book book = new Book(barCode, title, author, genre, status, dueDate);
                             library.addBook(book);
 
                             System.out.println("Would you like to add another book? Yes or No?");
@@ -252,11 +256,11 @@ public class MenuHandler {
                         switch (removalMenu) {
                             case 1:
                                 //via title
-                                viaTitle.removalViaTitle();
+                                //viaTitle.removalViaTitle();
                                 break;
                             case 2:
                                 //via barcode
-                                viaBarcode.removalViaBarcode();
+                                //viaBarcode.removalViaBarcode();
                                 break;
                             case 3:
                                 System.out.println("Returning to the Main Menu, Please wait...");
@@ -283,7 +287,7 @@ public class MenuHandler {
                         switch (returnMenu) {
                             case 1:
                                 //via title
-                                viaTitle.returnViaTitle();
+                                //viaTitle.returnViaTitle();
                                 break;
                             case 2:
                                 //via barcode
@@ -320,7 +324,7 @@ public class MenuHandler {
 
                                 System.out.println("Upload taking place, please wait...");
 
-                                uploadTextFile.readYourText();
+                                //uploadTextFile.readYourText();
                                 scanner1.close();
                                 continue;
                             } else {
@@ -346,11 +350,6 @@ public class MenuHandler {
                 isGUIEntry = true;
             }
         }
-
-
-//        public logIN() {
-//
-//        }
     }
 
 }

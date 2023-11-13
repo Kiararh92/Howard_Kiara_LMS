@@ -43,17 +43,17 @@ public class ViaTitle {
      * Used an iterator as the error ConcurrentModificationException
      * kept occurring.
      */
-    public void removalViaTitle() {
+    public void removalViaTitle(JLabel statusReBcLabel, JTextField fieldReT, JTextArea libraryReBcTextArea) {
 
         Scanner scanner = new Scanner(System.in);
 
         while(true) {
             System.out.println("What is the title of the book you would like to delete: ");
-            removedTitle = scanner.nextLine();
+            removedTitle = fieldReT.getText();
             Iterator<Book> iterator = library.getBooks().iterator();
             while (iterator.hasNext()) {
                 Book book = iterator.next();
-                if (Objects.equals(book.getTitle(), removedTitle)) {
+                if (removedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("Available")) {
                     int reBarcode = book.getbarCode();
                     library.updateStatus(reBarcode, "Deleted");
                     iterator.remove();
@@ -68,13 +68,14 @@ public class ViaTitle {
         for (Book book : library.getRemoved()) {
             fileWriter.writeToFile();
             removeWrite.writeRemoved();
-            System.out.println("Book successfully deleted.");
+            statusReBcLabel.setText("Book successfully deleted.");
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
         System.out.println("Book Deletion Finished. \n");
         System.out.println("Here is the current library collection after deletion.");
-        for(Book book : library.getBooks()) {
-            System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
+        libraryReBcTextArea.setText("");
+        for(Book book : library.getRemoved()) {
+            libraryReBcTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
         }
     }
 
@@ -108,8 +109,8 @@ public class ViaTitle {
                     library.addBorrowed(book);
                     askedOut = true;
                     statusLabel.setText("Book successfully checked out.");
-                } else {
-                    askedOut = false;
+                }
+                if (!askedOut) {
                     statusLabel.setText("Book not found or not available for checkout.");
                 }
             }
@@ -135,6 +136,7 @@ public class ViaTitle {
         libraryTextArea.setText("");
         for(Book book : library.getBooks()) {
             libraryTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
+            //System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
     /*
@@ -150,26 +152,26 @@ public class ViaTitle {
      * Used an iterator as the error ConcurrentModificationException
      * kept occurring.
      */
-    public void returnViaTitle() {
+    public void returnViaTitle(JLabel statusChckInLabel, JTextField fieldCheckIn, JTextArea libraryInTextArea) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("Please provide the title of the book you would like to return today: ");
-            returnedTitle = scanner.nextLine();
+            returnedTitle = fieldCheckIn.getText();
             Iterator<Book> iterator = library.getCheckedOut().iterator();
             while (iterator.hasNext()) {
                 Book book = iterator.next();
-                if (Objects.equals(book.getTitle(), returnedTitle)) {
+                if (returnedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("Checked-Out")) {
                     int inBarcode = book.getbarCode();
                     iterator.remove();
                     library.addBook(book);
                     library.dueDateStatus(book.getdueDate());
                     library.updateStatus(inBarcode, "Available");
                     book.setdueDate(null);
-                    System.out.println("Book successfully checked-in.");
+                    statusChckInLabel.setText("Book successfully checked-in.");
                     askReturn = true;
                 } else {
-                    System.out.println("That book is not currently checked-out.");
+                    statusChckInLabel.setText("That book is not currently checked-out.");
                     askReturn = false;
                 }
             }
@@ -181,7 +183,9 @@ public class ViaTitle {
         }
         System.out.println("Thank you for returning your books today. \n");
         System.out.println("Here is the current library collection after returning your books.");
+        libraryInTextArea.setText("");
         for (Book book : library.getBooks()) {
+            libraryInTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
             System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
