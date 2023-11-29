@@ -226,12 +226,12 @@
                       <text value="Select File"/>
                     </properties>
                   </component>
-                  <component id="50497" class="javax.swing.JButton" binding="bnSave">
+                  <component id="50497" class="javax.swing.JButton" binding="bnUpDB">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Save"/>
+                      <text value="Upload Database"/>
                     </properties>
                   </component>
                   <component id="1a38e" class="javax.swing.JTextArea" binding="libraryUpTextArea">

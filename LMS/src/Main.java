@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.*;
 import java.io.*;
@@ -23,14 +26,9 @@ public class Main {
      * Calls the varies reader and writer methods to edit text files.
      */
 
-//    public FileReader(String filePath, ArrayList<Book> collection, Library library, ArrayList<Integer> idList, Barcode generator) {
-//        this.filePath = filePath;
-//        this.collection = collection;
-//        this.library = library;
-//        this.idList = idList;
-//        this.generator = generator;
-//    }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+        //getConnection();
 
         ArrayList<Book> collection = new ArrayList<>();
         ArrayList <Book> checkedOut = new ArrayList<>();
@@ -62,21 +60,11 @@ public class Main {
         MenuHandler menuHandler = new MenuHandler(library, generator ,collection, idList, checkedOut, removedBooks, fileReader,borrowedReader,
                                                     removedReader,fileWriter,outWrite,removeWrite, viaTitle, viaBarcode, user1, user2);
 
-//        fileReader.readPrintFile();
-//        borrowedReader.readCheckedOut();
-
-        //TableModel tableModel = new TableModel(collection, library);
-
         TableModel tableModel = new TableModel(collection, library);
         JTable table1 = new JTable(tableModel);
 
 
-
-//        int testchoice = 0;
-//        User testUser = null;
-//        String testFilePath = "";
-//
-//        menuHandler.showMenu(testchoice, testUser, testFilePath);
+        getConnection();
 
         try {
             MainFrame mainFrame = new MainFrame(menuHandler,library, collection, fileReader, tableModel, idList, generator, fileWriter,outWrite,removeWrite);
@@ -84,6 +72,24 @@ public class Main {
         } catch (Exception e) {
             System.out.println("An error has occurred. You will be returned to the Main Menu to try again.");
             e.printStackTrace();
+        }
+    }
+
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+        try{
+            String driver = "com.mysql.cj.jdbc.Driver";
+            String url = "jdbc:mysql://localhost:3306/LMS_DB23";
+            String username = "root";
+            String password = "ajoBp4TlP4lJ*ukh";
+            Class.forName(driver);
+
+            Connection conn = DriverManager.getConnection(url,username,password);
+            System.out.println("Connected");
+            return conn;
+        } catch (ClassNotFoundException | SQLException e){
+            System.out.println(e);
+            e.printStackTrace();
+            throw e;
         }
 
     }

@@ -32,7 +32,7 @@ public class Book{
         this.dueDate = dueDate;
 
         if(status == null || status.isEmpty()) {
-            this.status = "Available";
+            this.status = "A";
         } else {
             this.status = status;
         }

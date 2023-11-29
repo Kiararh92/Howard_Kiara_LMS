@@ -107,10 +107,6 @@ public class MenuHandler {
                 }
                 choice = scanner.nextInt();
 
-//                if (choice == 0) {
-//                    isGUIEntry = true; // Set the flag to true for subsequent iterations
-//                    continue; // Skip the switch statement and go back to the loop start
-//                }
             }else {
                 }
                 switch (choice) {

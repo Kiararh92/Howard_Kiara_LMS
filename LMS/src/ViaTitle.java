@@ -1,4 +1,8 @@
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -53,12 +57,35 @@ public class ViaTitle {
             Iterator<Book> iterator = library.getBooks().iterator();
             while (iterator.hasNext()) {
                 Book book = iterator.next();
-                if (removedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("Available")) {
+                if (removedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("A")) {
                     int reBarcode = book.getbarCode();
-                    library.updateStatus(reBarcode, "Deleted");
+                    library.updateStatus(reBarcode, "R");
                     iterator.remove();
                     library.addRemoved(book);
                     askedRemoved = true;
+                    statusReBcLabel.setText("Book successfully removed.");
+
+                    try {
+                        Connection con = Main.getConnection();
+
+                    PreparedStatement removed = con.prepareStatement("DELETE FROM books WHERE barcode = ?");
+
+                        removed.setInt(1, book.getbarCode());
+
+                        int rowsUpdated = removed.executeUpdate();
+
+                        if (rowsUpdated > 0) {
+                            statusReBcLabel.setText("Book successfully removed.");
+                            System.out.println("Record removed successfully!");
+                        } else {
+                            statusReBcLabel.setText("Book not found.");
+                            System.out.println("Record not found or not removed.");
+                        }
+                    } catch (Exception ex) {
+
+                        ex.printStackTrace();
+
+                    }
                 } else {
                     askedRemoved = false;
                 }
@@ -100,30 +127,54 @@ public class ViaTitle {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 //borrowedTitle.equalsIgnoreCase(book.getTitle());
-                if (borrowedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("Available")) {
+                if (borrowedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("A")) {
                     int outBarcode = book.getbarCode();
-                    library.updateStatus(outBarcode, "Checked-Out");
+                    library.updateStatus(outBarcode, "O");
                     LocalDate dueDate = LocalDate.now().plusDays(14);
                     book.setdueDate(dueDate);
                     iterator.remove();
                     library.addBorrowed(book);
                     askedOut = true;
                     statusLabel.setText("Book successfully checked out.");
+
+
+                    try {
+                        Connection con = Main.getConnection();
+
+                        PreparedStatement updated = con.prepareStatement("UPDATE books SET status = ?, due_date = ? WHERE barcode = ?");
+
+                        updated.setString(1, book.getStatus());
+                        if(book.getdueDate() != null) {
+                            updated.setDate(2, Date.valueOf(book.getdueDate()));
+                        }else {
+                            //System.out.println("Due date is null. Please Provide a valid due date.");
+                            //LocalDate defaultDueDate = LocalDate.now().plusDays(14);
+                            updated.setNull(2, java.sql.Types.DATE);
+                        }
+                        updated.setInt(3, book.getbarCode());
+
+
+                        int rowsUpdated = updated.executeUpdate();
+
+                        if (rowsUpdated > 0) {
+                            System.out.println("Record updated successfully!");
+                        } else {
+                            System.out.println("Record not found or not updated.");
+                        }
+                    } catch (Exception ex) {
+
+                        ex.printStackTrace();
+
+                    }
                 }
+
                 if (!askedOut) {
                     statusLabel.setText("Book not found or not available for checkout.");
                 }
             }
             break;
         }
-        //GUI status
-//        if(askedOut) {
-//            statusLabel.setText("Book successfully checked out.");
-//        } else {
-//            statusLabel.setText("Book not found or not available for checkout.");
-//        }
 
-        // Maybe just for Staff
         for(Book book : library.getCheckedOut()) {
             fileWriter.writeToFile();
             outWrite.writeCheckedOut();
@@ -136,7 +187,6 @@ public class ViaTitle {
         libraryTextArea.setText("");
         for(Book book : library.getBooks()) {
             libraryTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
-            //System.out.println(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre());
         }
     }
     /*
@@ -161,15 +211,44 @@ public class ViaTitle {
             Iterator<Book> iterator = library.getCheckedOut().iterator();
             while (iterator.hasNext()) {
                 Book book = iterator.next();
-                if (returnedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("Checked-Out")) {
+                if (returnedTitle.equalsIgnoreCase(book.getTitle()) && book.getStatus().equals("O")) {
                     int inBarcode = book.getbarCode();
                     iterator.remove();
                     library.addBook(book);
                     library.dueDateStatus(book.getdueDate());
-                    library.updateStatus(inBarcode, "Available");
+                    library.updateStatus(inBarcode, "A");
                     book.setdueDate(null);
                     statusChckInLabel.setText("Book successfully checked-in.");
                     askReturn = true;
+
+                    try {
+                        Connection con = Main.getConnection();
+
+                        PreparedStatement updated = con.prepareStatement("UPDATE books SET status = ?, due_date = ? WHERE barcode = ?");
+
+                        updated.setString(1, book.getStatus());
+                        if(book.getdueDate() != null) {
+                            //updated.setDate(2, Date.valueOf(book.getdueDate()));
+                            updated.setNull(2, java.sql.Types.DATE);
+                        }else {
+                            updated.setNull(2, java.sql.Types.DATE);
+                        }
+                        updated.setInt(3, book.getbarCode());
+
+
+                        int rowsUpdated = updated.executeUpdate();
+
+                        if (rowsUpdated > 0) {
+                            System.out.println("Record updated successfully!");
+                        } else {
+                            System.out.println("Record not found or not updated.");
+                        }
+                    } catch (Exception ex) {
+
+                        ex.printStackTrace();
+
+                    }
+
                 } else {
                     statusChckInLabel.setText("That book is not currently checked-out.");
                     askReturn = false;

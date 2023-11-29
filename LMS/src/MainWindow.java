@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class MainWindow extends JFrame{
@@ -34,7 +38,7 @@ public class MainWindow extends JFrame{
     private JLabel removeBcLabel;
     private JTextArea libraryUpTextArea;
     private JLabel statusUpLabel;
-    private JButton bnSave;
+    private JButton bnUpDB;
     private JLabel removeTLabel;
     private JTextField fieldReT;
     private JButton bnReBcProcess;
@@ -202,15 +206,65 @@ public class MainWindow extends JFrame{
             }
         });
 
-        bnSave.addActionListener(new ActionListener() {
+        bnUpDB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                // if (currentUser instanceof StaffMember) {
-                    fileWriter.writeToFile();
-                    outWrite.writeCheckedOut();
-                    removeWrite.writeRemoved();
+                fileWriter.writeToFile();
+                outWrite.writeCheckedOut();
+                removeWrite.writeRemoved();
+
                     //System.out.println("Your text files has been updated.");
                     JOptionPane.showMessageDialog(null, "Your text files has been updated.");
+
+                try{
+                    Connection con = Main.getConnection();
+                    //Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/LMS_DB23");
+                    //PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM books");
+                    String query = "SELECT * FROM books";
+                    PreparedStatement statement = con.prepareStatement(query);
+
+                    ResultSet result = statement.executeQuery();
+
+                    //ArrayList<String> array = new ArrayList<String>();
+                    //libraryUpTextArea.setText("");
+                    while(result.next()) {
+                        int barcode = result.getInt("barcode");
+                        String title = result.getString("title");
+                        String author = result.getString("author");
+                        String genre = result.getString("genre");
+                        String status = result.getString("status");
+
+                        //checks if the due date is null before attempting to parse.
+                        LocalDate dueDate = null;
+                        String dueDateString = result.getString("due_Date");
+                        if(dueDateString != null) {
+                            dueDate = LocalDate.parse(dueDateString);
+                        }
+                        //LocalDate dueDate= LocalDate.parse(result.getString("due_Date"));
+
+
+                        Book book = new Book(barcode,title,author,genre,status,dueDate);
+
+                        library.addBook(book);
+                    }
+
+                    statusUpLabel.setText("Updated library collection.");
+                    System.out.println("All records have been selected!");
+
+                }catch(Exception ex){
+                    statusUpLabel.setText("An error has occurred. You will be returned to the Main Menu to try again.");
+                    System.out.println(e);
+                    ex.printStackTrace();
+                }
+                libraryUpTextArea.setText("");
+                for (Book book : library.getBooks()) {
+                    libraryUpTextArea.append(book.getbarCode() + " " + book.getTitle() + " " + book.getAuthor() + " " + book.getGenre() + "\n");
+                }
+
+                fileWriter.writeToFile();
+                outWrite.writeCheckedOut();
+                removeWrite.writeRemoved();
             }
         });
     }

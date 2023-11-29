@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.util.*;
 import java.io.*;
@@ -58,11 +61,34 @@ public class ViaBarcode {
                 Iterator<Book> iterator = library.getBooks().iterator();
                 while (iterator.hasNext()) {
                     Book book = iterator.next();
-                    if (book.getbarCode() == removedBarcode && book.getStatus().equals("Available")) {
-                        library.updateStatus(removedBarcode, "Removed");
+                    if (book.getbarCode() == removedBarcode && book.getStatus().equals("A")) {
+                        library.updateStatus(removedBarcode, "R");
                         iterator.remove();
                         library.addRemoved(book);
                         askedRemoved = true;
+
+                        try {
+                            Connection con = Main.getConnection();
+
+                            PreparedStatement removed = con.prepareStatement("DELETE FROM books WHERE barcode = ?");
+
+                            removed.setInt(1, book.getbarCode());
+
+                            int rowsUpdated = removed.executeUpdate();
+
+                            if (rowsUpdated > 0) {
+                                statusReBcLabel.setText("Book successfully removed.");
+                                System.out.println("Record removed successfully!");
+                            } else {
+                                statusReBcLabel.setText("Book not found.");
+                                System.out.println("Record not found or not removed.");
+                            }
+                        } catch (Exception ex) {
+
+                            ex.printStackTrace();
+
+                        }
+
                     } else {
                         statusReBcLabel.setText("Barcode not found.");
                         askedRemoved = false;
@@ -110,7 +136,7 @@ public class ViaBarcode {
             while (iterator.hasNext()) {
                 Book book = iterator.next();
                 if (book.getbarCode() == borrowedBarcode) {
-                    library.updateStatus(borrowedBarcode, "Checked-Out");
+                    library.updateStatus(borrowedBarcode, "C");
                     LocalDate dueDate = LocalDate.now().plusDays(14);
                     //LocalDate dueDate = LocalDate.now().minusDays(2);
                     book.setdueDate(dueDate);
@@ -163,7 +189,7 @@ public class ViaBarcode {
                     iterator.remove();
                     library.addBook(book);
                     library.dueDateStatus(book.getdueDate());
-                    library.updateStatus(returnedBarcode, "Available");
+                    library.updateStatus(returnedBarcode, "A");
                     book.setdueDate(null);
                     found = true;
                     System.out.println("Book successfully checked-in.");

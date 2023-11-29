@@ -84,7 +84,7 @@ public class FileReader {
                     String author = parts[2];
                     String genre = parts[3];
 
-                    String status = (parts.length >= 5) ? parts[4] : "Available";
+                    String status = (parts.length >= 5) ? parts[4] : "O";
 
                     LocalDate dueDate = null;
                     if(parts.length >= 6 && !parts[5].isEmpty()) {
@@ -130,7 +130,7 @@ public class FileReader {
                     String author1 = parts1[2];
                     String genre1 = parts1[3];
 
-                    String status1 = (parts1.length >= 5) ? parts1[4] : "Available";
+                    String status1 = (parts1.length >= 5) ? parts1[4] : "A";
 
                     LocalDate dueDate1 = null;
                     if(parts1.length >= 6 && !parts1[5].isEmpty()) {
