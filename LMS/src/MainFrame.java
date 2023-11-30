@@ -2,8 +2,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+/*
+ * Kiara Howard, Software Dev I, 11/27/23
+ * Class Name MainFrame
+ * This class handles the frontend logic and GUI of the
+ * login menu of the application.
+ */
 public class MainFrame extends JFrame {
+    /*
+     * Kiara Howard, Software Dev I, 11/25/23
+     * Class Name MenuHandler
+     * This class handles the menu selection of the user.
+     */
     private JTextField tfTextUpload;
     private JTextField tfLastName;
     private JButton patronButton;
@@ -47,19 +57,10 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-//                String firstName = tfTextUpload.getText();
-//                String lastName = tfLastName.getText();
-//                lbWelcome.setText("Welcome " + firstName + " " + lastName);
-//                JOptionPane.showMessageDialog(MainFrame.this, "Thank you. ");
-
                 User currentUser = new User("Patron", "Patron", 101);
-
-//                MenuGui menuGui = new MenuGui(currentUser, menuHandler);
-//                menuGui.setVisible(true);
 
                 MainWindow mainWindow = new MainWindow(menuHandler, fileReader, currentUser, library, collection, tableModel, idList, generator,fileWriter,outWrite,removeWrite);
                 mainWindow.setVisible(true);
-
 
             }
         });
@@ -67,8 +68,6 @@ public class MainFrame extends JFrame {
         staffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //tfTextUpload.setText("");
-                //tfLastName.setText("");
                 lbWelcome.setText("");
 
                 User currentUser = new StaffMember("Staff", "Staff", 501);

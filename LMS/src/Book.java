@@ -37,17 +37,11 @@ public class Book{
             this.status = status;
         }
     }
-    /*
-     * Receives the Barcode of the book
-     * @return current barCode of the book
-     */
+
     public int getbarCode() {
         return barCode;
     }
-    /*
-     * Sets the Barcode of the book.
-     * @param barCode The new value to set for barCode.
-     */
+
     public void setbarCode(int barCode){
         this.barCode = barCode;
     }

@@ -147,8 +147,6 @@ public class ViaTitle {
                         if(book.getdueDate() != null) {
                             updated.setDate(2, Date.valueOf(book.getdueDate()));
                         }else {
-                            //System.out.println("Due date is null. Please Provide a valid due date.");
-                            //LocalDate defaultDueDate = LocalDate.now().plusDays(14);
                             updated.setNull(2, java.sql.Types.DATE);
                         }
                         updated.setInt(3, book.getbarCode());
@@ -183,6 +181,7 @@ public class ViaTitle {
 
         System.out.println("Thank you for checking out today. \n");
         System.out.println("Here is the current library collection after checking out.");
+
         //Display to GUI Text area instead of console.
         libraryTextArea.setText("");
         for(Book book : library.getBooks()) {

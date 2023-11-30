@@ -3,7 +3,12 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.*;
 import java.util.ArrayList;
-
+/*
+ * Kiara Howard, Software Dev I, 11/27/23
+ * Class Name TableModel
+ * This class handles the creation of the custom table for
+ * displaying the library books.
+ */
 public class TableModel extends AbstractTableModel {
     private JTable table1;
     private JScrollPane scrollPane;

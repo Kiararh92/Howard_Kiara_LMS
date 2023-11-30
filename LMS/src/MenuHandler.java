@@ -6,7 +6,11 @@ import java.util.*;
 import java.io.*;
 
 public class MenuHandler {
-
+    /*
+     * Kiara Howard, Software Dev I, 11/25/23
+     * Class Name MenuHandler
+     * This class handles the menu selection of the user.
+     */
     private Library library;
     private Barcode generator;
     private ArrayList<Book> collection;
@@ -54,15 +58,11 @@ public class MenuHandler {
 
     public void showMenu(int choice, User currentUser, String guiFilePath){
         this.choice = choice;
-        //this.currentUser = currentUser;
         this.guiFilePath = guiFilePath;
 
         Scanner scanner = new Scanner(System.in);
 
-//        TableModel tableModel = new TableModel(collection, library);
-//        JTable table1 = new JTable(tableModel);
-
-        boolean isGUIEntry = false; //Initialize the flag for GUI entry.
+        boolean isGUIEntry = false;
 
         if(choice == 0) {
 
@@ -282,11 +282,8 @@ public class MenuHandler {
 
                         switch (returnMenu) {
                             case 1:
-                                //via title
-                                //viaTitle.returnViaTitle();
                                 break;
                             case 2:
-                                //via barcode
                                 viaBarcode.returnViaBarcode();
                                 break;
                             case 3:
@@ -308,7 +305,7 @@ public class MenuHandler {
                         try {
                             if (currentUser instanceof StaffMember) {
                                 String yourBooks;
-                                //scanner.nextLine();
+
                                 if (guiFilePath.isEmpty()) {
                                     System.out.println("Name of text file. ex. Textfile.txt :");
                                     yourBooks = scanner1.nextLine();
@@ -320,7 +317,6 @@ public class MenuHandler {
 
                                 System.out.println("Upload taking place, please wait...");
 
-                                //uploadTextFile.readYourText();
                                 scanner1.close();
                                 continue;
                             } else {

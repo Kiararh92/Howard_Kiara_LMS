@@ -87,7 +87,10 @@ public class Library{
             }
         }
     }
-
+    /*
+     * Updates a books current due date status, while calculating if it's
+     * overdue or not
+     */
     public void dueDateStatus(LocalDate dueDate) {
         LocalDate currentDate = LocalDate.now();
         if (currentDate.isAfter(dueDate)) {

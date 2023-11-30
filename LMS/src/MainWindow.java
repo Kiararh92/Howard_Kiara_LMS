@@ -7,7 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+/*
+ * Kiara Howard, Software Dev I, 11/29/23
+ * Class Name MainWindow
+ * This class handles the frontend logic and GUI of the
+ * main and sub menus of the application.
+ */
 public class MainWindow extends JFrame{
     private JPanel panel1;
     private JButton bnCheckOut;

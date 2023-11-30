@@ -13,7 +13,7 @@ import java.io.*;
  * that deal with finding a book by its barcode.
  * @param removedBarcode User input barcode of a book to be deleted.
  * @param borrowedBarcode User input barcode for the book they want to check out.
- * @param
+ * @param returnedBarcode User input barcode for the returned book.
  */
 public class ViaBarcode {
     private final Library library;
