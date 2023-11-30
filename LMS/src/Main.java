@@ -10,7 +10,7 @@ import java.io.*;
 /*
  * Kiara Howard, Software Dev I, 9/10/23
  * Class Name Main
- * This class houses everything need to run the LMS program.
+ * This class houses everything needed to run the LMS program.
  */
 public class Main {
     /*
@@ -21,14 +21,13 @@ public class Main {
      * Displays the front end menu for user interaction
      *
      * Creates instances for the barCode # and the library.
-     * Creates an arraylist for the books in different stages.
+     * Creates an arraylist for the books as they have different status.
      *
      * Calls the varies reader and writer methods to edit text files.
+     * Initiate GUI forms
      */
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
-        //getConnection();
 
         ArrayList<Book> collection = new ArrayList<>();
         ArrayList <Book> checkedOut = new ArrayList<>();
@@ -74,7 +73,9 @@ public class Main {
             e.printStackTrace();
         }
     }
-
+    /*
+     * Connection to MySQL database
+     */
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
         try{
             String driver = "com.mysql.cj.jdbc.Driver";
