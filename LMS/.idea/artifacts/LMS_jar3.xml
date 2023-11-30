@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LMS:jar3">
+    <output-path>$PROJECT_DIR$/out/artifacts/LMS_jar3</output-path>
+    <root id="archive" name="LMS.jar">
+      <element id="module-output" name="LMS" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/Code/Additional Files/Java/mysql/mysql-connector-j-8.2.0/mysql-connector-j-8.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/Code/Additional Files/Java/sql jdbc 12.4.2.0/sqljdbc_12.4/enu/jars/mssql-jdbc-12.4.2.jre11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/Code/Additional Files/Java/sql jdbc 12.4.2.0/sqljdbc_12.4/enu/jars/mssql-jdbc-12.4.2.jre8.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
